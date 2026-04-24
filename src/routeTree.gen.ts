@@ -15,6 +15,12 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppUniversityRouteImport } from './routes/app.university'
+import { Route as AppTransferRouteImport } from './routes/app.transfer'
+import { Route as AppQrRouteImport } from './routes/app.qr'
+import { Route as AppProfileRouteImport } from './routes/app.profile'
+import { Route as AppDiscoverRouteImport } from './routes/app.discover'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -46,37 +52,107 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppUniversityRoute = AppUniversityRouteImport.update({
+  id: '/university',
+  path: '/university',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTransferRoute = AppTransferRouteImport.update({
+  id: '/transfer',
+  path: '/transfer',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppQrRoute = AppQrRouteImport.update({
+  id: '/qr',
+  path: '/qr',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDiscoverRoute = AppDiscoverRouteImport.update({
+  id: '/discover',
+  path: '/discover',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/app': typeof AppRoute
+  '/app': typeof AppRouteWithChildren
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
+  '/app/discover': typeof AppDiscoverRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/qr': typeof AppQrRoute
+  '/app/transfer': typeof AppTransferRoute
+  '/app/university': typeof AppUniversityRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/app': typeof AppRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
+  '/app/discover': typeof AppDiscoverRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/qr': typeof AppQrRoute
+  '/app/transfer': typeof AppTransferRoute
+  '/app/university': typeof AppUniversityRoute
+  '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/app': typeof AppRoute
+  '/app': typeof AppRouteWithChildren
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
+  '/app/discover': typeof AppDiscoverRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/qr': typeof AppQrRoute
+  '/app/transfer': typeof AppTransferRoute
+  '/app/university': typeof AppUniversityRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/app' | '/login' | '/onboarding' | '/signup'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/app'
+    | '/login'
+    | '/onboarding'
+    | '/signup'
+    | '/app/discover'
+    | '/app/profile'
+    | '/app/qr'
+    | '/app/transfer'
+    | '/app/university'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/app' | '/login' | '/onboarding' | '/signup'
+  to:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/onboarding'
+    | '/signup'
+    | '/app/discover'
+    | '/app/profile'
+    | '/app/qr'
+    | '/app/transfer'
+    | '/app/university'
+    | '/app'
   id:
     | '__root__'
     | '/'
@@ -85,12 +161,18 @@ export interface FileRouteTypes {
     | '/login'
     | '/onboarding'
     | '/signup'
+    | '/app/discover'
+    | '/app/profile'
+    | '/app/qr'
+    | '/app/transfer'
+    | '/app/university'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
-  AppRoute: typeof AppRoute
+  AppRoute: typeof AppRouteWithChildren
   LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
   SignupRoute: typeof SignupRoute
@@ -140,13 +222,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/university': {
+      id: '/app/university'
+      path: '/university'
+      fullPath: '/app/university'
+      preLoaderRoute: typeof AppUniversityRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/transfer': {
+      id: '/app/transfer'
+      path: '/transfer'
+      fullPath: '/app/transfer'
+      preLoaderRoute: typeof AppTransferRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/qr': {
+      id: '/app/qr'
+      path: '/qr'
+      fullPath: '/app/qr'
+      preLoaderRoute: typeof AppQrRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/profile': {
+      id: '/app/profile'
+      path: '/profile'
+      fullPath: '/app/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/discover': {
+      id: '/app/discover'
+      path: '/discover'
+      fullPath: '/app/discover'
+      preLoaderRoute: typeof AppDiscoverRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
+
+interface AppRouteChildren {
+  AppDiscoverRoute: typeof AppDiscoverRoute
+  AppProfileRoute: typeof AppProfileRoute
+  AppQrRoute: typeof AppQrRoute
+  AppTransferRoute: typeof AppTransferRoute
+  AppUniversityRoute: typeof AppUniversityRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppDiscoverRoute: AppDiscoverRoute,
+  AppProfileRoute: AppProfileRoute,
+  AppQrRoute: AppQrRoute,
+  AppTransferRoute: AppTransferRoute,
+  AppUniversityRoute: AppUniversityRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
-  AppRoute: AppRoute,
+  AppRoute: AppRouteWithChildren,
   LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
   SignupRoute: SignupRoute,
