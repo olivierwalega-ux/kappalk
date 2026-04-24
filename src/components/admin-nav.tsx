@@ -2,12 +2,13 @@ import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { LayoutDashboard, Calendar, Users, BarChart3, ArrowLeftRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const items = [
+type NavItem = { to: string; label: string; icon: typeof LayoutDashboard; exact?: boolean };
+const items: NavItem[] = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/events", label: "Wydarzenia", icon: Calendar },
   { to: "/admin/students", label: "Studenci", icon: Users },
   { to: "/admin/analytics", label: "Analityki", icon: BarChart3 },
-] as const;
+];
 
 export function AdminNav() {
   const { pathname } = useLocation();
@@ -17,7 +18,7 @@ export function AdminNav() {
       {items.map(({ to, label, icon: Icon, exact }) => {
         const active = exact ? pathname === to : pathname === to || pathname.startsWith(to + "/");
         return (
-          <Link key={to} to={to} className="flex flex-1 flex-col items-center gap-1 py-1.5 active:scale-90">
+          <Link key={to} to={to as string} className="flex flex-1 flex-col items-center gap-1 py-1.5 active:scale-90">
             <span className={cn("flex h-9 w-9 items-center justify-center rounded-xl", active ? "bg-teal/25" : "")}>
               <Icon className={cn("h-5 w-5", active ? "text-teal opacity-100" : "text-text-1 opacity-40")} />
             </span>
