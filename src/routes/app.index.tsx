@@ -42,7 +42,7 @@ function HomePage() {
       <StatusBar />
 
       {/* HERO */}
-      <div className="bg-gradient-hero relative mx-4 mt-2 overflow-hidden rounded-3xl border border-primary/30 px-5 py-5">
+      <Link to="/app/profile" className="bg-gradient-hero relative mx-4 mt-2 block overflow-hidden rounded-3xl border border-primary/30 px-5 py-5 active:opacity-90">
         <div className="pointer-events-none absolute -right-8 -top-8 h-44 w-44 rounded-full bg-[radial-gradient(closest-side,oklch(0.66_0.18_285/0.3),transparent)]" />
         <div className="relative flex items-start justify-between">
           <div>
@@ -77,7 +77,7 @@ function HomePage() {
             <div className="bg-gradient-gold h-full rounded-full" style={{ width: `${progress}%` }} />
           </div>
         </div>
-      </div>
+      </Link>
 
       {/* QUICK ACTIONS */}
       <div className="mx-4 mt-3 grid grid-cols-3 gap-2">
@@ -156,7 +156,7 @@ function HomePage() {
       </div>
 
       {/* ACTIVITY */}
-      <SectionHeader title="Ostatnia aktywność" action="Wszystkie" />
+      <SectionHeader title="Ostatnia aktywność" action={<Link to="/app/profile">Wszystkie</Link>} />
       <div className="bg-surface-2 mx-4 overflow-hidden rounded-2xl border border-soft">
         {tx.length === 0 && <div className="p-4 text-sm text-text-2">Brak transakcji. Odbierz pierwsze punkty z eventu!</div>}
         {tx.map((t) => (
