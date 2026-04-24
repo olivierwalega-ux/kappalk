@@ -14,16 +14,184 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      events: {
+        Row: {
+          category: string
+          color: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          location: string | null
+          participants_count: number
+          points: number
+          starts_at: string | null
+          title: string
+        }
+        Insert: {
+          category?: string
+          color?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          location?: string | null
+          participants_count?: number
+          points?: number
+          starts_at?: string | null
+          title: string
+        }
+        Update: {
+          category?: string
+          color?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          location?: string | null
+          participants_count?: number
+          points?: number
+          starts_at?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_initials: string | null
+          created_at: string
+          email: string
+          faculty: string | null
+          first_name: string | null
+          id: string
+          last_name: string | null
+          level: number
+          points: number
+          referral_code: string | null
+          streak_days: number
+          student_id: string | null
+          updated_at: string
+          year: number | null
+        }
+        Insert: {
+          avatar_initials?: string | null
+          created_at?: string
+          email: string
+          faculty?: string | null
+          first_name?: string | null
+          id: string
+          last_name?: string | null
+          level?: number
+          points?: number
+          referral_code?: string | null
+          streak_days?: number
+          student_id?: string | null
+          updated_at?: string
+          year?: number | null
+        }
+        Update: {
+          avatar_initials?: string | null
+          created_at?: string
+          email?: string
+          faculty?: string | null
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          level?: number
+          points?: number
+          referral_code?: string | null
+          streak_days?: number
+          student_id?: string | null
+          updated_at?: string
+          year?: number | null
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string | null
+          event_id: string | null
+          id: string
+          related_user_id: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description?: string | null
+          event_id?: string | null
+          id?: string
+          related_user_id?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string | null
+          event_id?: string | null
+          id?: string
+          related_user_id?: string | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      claim_event: { Args: { _event_id: string }; Returns: Json }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      transfer_points: {
+        Args: { _amount: number; _note?: string; _to_user: string }
+        Returns: Json
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "student"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +318,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "student"],
+    },
   },
 } as const
