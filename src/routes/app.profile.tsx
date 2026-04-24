@@ -1,8 +1,8 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { LogOut, Settings, ShieldCheck, Send, QrCode, Copy } from "lucide-react";
+import { LogOut, Settings, ShieldCheck, Send, QrCode, Copy, Bell, CreditCard, Lock, Star, Clock, Users, Activity, Zap } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/lib/auth-context";
-import { StatusBar } from "@/components/phone-shell";
+import { StatusBar, SectionHeader } from "@/components/phone-shell";
 import { formatPts } from "@/lib/format";
 
 export const Route = createFileRoute("/app/profile")({
@@ -52,8 +52,8 @@ function ProfilePage() {
       </div>
 
       {/* Wallet card */}
-      <div className="mx-4 mt-4">
-        <h2 className="font-display mb-2 text-[15px] font-bold">Portfel KAPP</h2>
+      <SectionHeader title="Portfel KAPP" />
+      <div className="mx-4">
         <div
           className="relative overflow-hidden rounded-2xl border border-primary/30 p-5"
           style={{ background: "linear-gradient(135deg, oklch(0.22 0.12 285), oklch(0.27 0.14 285), oklch(0.16 0.1 285))" }}
@@ -83,41 +83,50 @@ function ProfilePage() {
       </div>
 
       {/* Referral */}
-      <div className="mx-4 mt-4">
-        <h2 className="font-display mb-2 text-[15px] font-bold">Zaproś znajomego</h2>
-        <div className="bg-surface-2 rounded-2xl border border-soft p-4">
-          <div className="text-[13px] text-text-2">
-            Ty dostaniesz <span className="font-semibold text-brand-glow">+50 pkt</span>, a znajomy{" "}
-            <span className="font-semibold text-brand-glow">+100 pkt</span>.
+      <SectionHeader title="Zaproś znajomego" />
+      <div className="bg-surface-2 mx-4 rounded-2xl border border-soft p-4">
+        <div className="text-[13px] text-text-2">
+          Ty dostaniesz <span className="font-semibold text-brand-glow">+50 pkt</span>, a znajomy{" "}
+          <span className="font-semibold text-brand-glow">+100 pkt</span>.
+        </div>
+        <div className="bg-surface-3 mt-3 flex items-center justify-between rounded-xl px-4 py-3">
+          <div className="font-display text-base font-bold tracking-wider text-brand-glow">
+            {profile?.referral_code ?? "—"}
           </div>
-          <div className="bg-surface-3 mt-3 flex items-center justify-between rounded-xl px-4 py-3">
-            <div className="font-display text-base font-bold tracking-wider text-brand-glow">
-              {profile?.referral_code ?? "—"}
-            </div>
-            <button onClick={copyRef} className="flex items-center gap-1 text-xs text-text-3 active:text-text-1">
-              <Copy className="h-3.5 w-3.5" /> Kopiuj
-            </button>
-          </div>
+          <button onClick={copyRef} className="flex items-center gap-1 text-xs text-text-3 active:text-text-1">
+            <Copy className="h-3.5 w-3.5" /> Kopiuj
+          </button>
         </div>
       </div>
 
+      {/* Badges */}
+      <SectionHeader title="Odznaki" />
+      <div className="mx-4 flex flex-wrap gap-2">
+        <Badge icon={Star} color="var(--brand-glow)" label="Speaker" />
+        <Badge icon={Clock} color="var(--gold)" label="Early Bird" />
+        <Badge icon={Users} color="var(--teal)" label="Konektor" />
+        <Badge icon={Activity} color="var(--green)" label="Active Week" />
+        <Badge icon={Zap} color="var(--gold)" label="7-day Streak" />
+      </div>
+
       {/* Settings */}
-      <div className="mx-4 mt-4">
-        <h2 className="font-display mb-2 text-[15px] font-bold">Ustawienia</h2>
-        <div className="bg-surface-2 overflow-hidden rounded-2xl border border-soft">
-          <Row icon={<Settings className="h-4 w-4 text-brand-glow" />} label="Edytuj profil" />
-          {isAdmin && (
-            <button onClick={() => navigate({ to: "/admin" })} className="flex w-full items-center gap-3 border-t border-soft px-4 py-3.5 active:bg-surface-3">
-              <ShieldCheck className="h-4 w-4 text-gold" />
-              <span className="flex-1 text-left text-sm">Panel administratora</span>
-              <span className="text-text-3">›</span>
-            </button>
-          )}
-          <button onClick={logout} className="flex w-full items-center gap-3 border-t border-soft px-4 py-3.5 active:bg-surface-3">
-            <LogOut className="h-4 w-4 text-pink" />
-            <span className="flex-1 text-left text-sm text-pink">Wyloguj</span>
+      <SectionHeader title="Ustawienia" />
+      <div className="bg-surface-2 mx-4 overflow-hidden rounded-2xl border border-soft">
+        <Row icon={<Settings className="h-4 w-4 text-brand-glow" />} label="Edytuj profil" />
+        <Row icon={<Bell className="h-4 w-4 text-teal" />} label="Powiadomienia" border />
+        <Row icon={<CreditCard className="h-4 w-4 text-gold" />} label="Apple Wallet" border />
+        <Row icon={<Lock className="h-4 w-4 text-green" />} label="Prywatność" border />
+        {isAdmin && (
+          <button onClick={() => navigate({ to: "/admin" })} className="flex w-full items-center gap-3 border-t border-soft px-4 py-3.5 active:bg-surface-3">
+            <ShieldCheck className="h-4 w-4 text-gold" />
+            <span className="flex-1 text-left text-sm">Panel administratora</span>
+            <span className="text-text-3">›</span>
           </button>
-        </div>
+        )}
+        <button onClick={logout} className="flex w-full items-center gap-3 border-t border-soft px-4 py-3.5 active:bg-surface-3">
+          <LogOut className="h-4 w-4 text-pink" />
+          <span className="flex-1 text-left text-sm text-pink">Wyloguj</span>
+        </button>
       </div>
 
       <div className="h-8" />
@@ -134,9 +143,18 @@ function Stat({ label, value, accent }: { label: string; value: string; accent?:
   );
 }
 
-function Row({ icon, label }: { icon: React.ReactNode; label: string }) {
+function Badge({ icon: Icon, color, label }: { icon: typeof Star; color: string; label: string }) {
   return (
-    <div className="flex items-center gap-3 px-4 py-3.5 active:bg-surface-3">
+    <div className="bg-surface-2 flex items-center gap-1.5 rounded-full border border-soft px-3 py-1.5">
+      <Icon className="h-3.5 w-3.5" style={{ color }} />
+      <span className="text-[12px] text-text-1">{label}</span>
+    </div>
+  );
+}
+
+function Row({ icon, label, border }: { icon: React.ReactNode; label: string; border?: boolean }) {
+  return (
+    <div className={`flex items-center gap-3 px-4 py-3.5 active:bg-surface-3 ${border ? "border-t border-soft" : ""}`}>
       {icon}
       <span className="flex-1 text-sm">{label}</span>
       <span className="text-text-3">›</span>

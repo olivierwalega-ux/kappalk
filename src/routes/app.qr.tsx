@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { CreditCard, QrCode } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
-import { StatusBar, PageHeader } from "@/components/phone-shell";
+import { StatusBar, PageHeader, SectionHeader } from "@/components/phone-shell";
 import { formatPts } from "@/lib/format";
 
 export const Route = createFileRoute("/app/qr")({
@@ -13,7 +14,7 @@ function QrPage() {
   return (
     <div className="animate-fade-in">
       <StatusBar />
-      <PageHeader title="Skaner QR" subtitle="Pokaż swój kod lub zeskanuj cudzy" />
+      <PageHeader title="Skaner QR" subtitle="Zeskanuj kod by zdobyć punkty" />
 
       <div className="flex flex-col items-center px-6 pt-2">
         <div className="bg-surface-2 relative h-60 w-60 overflow-hidden rounded-3xl border-2 border-primary/30">
@@ -22,8 +23,8 @@ function QrPage() {
           <div className="absolute left-3 bottom-3 h-5 w-5 rounded-bl-md border-b-2 border-l-2 border-primary" />
           <div className="absolute right-3 bottom-3 h-5 w-5 rounded-br-md border-b-2 border-r-2 border-primary" />
           <div className="animate-scan absolute left-[13%] right-[13%] h-0.5 bg-gradient-to-r from-transparent via-brand-glow to-transparent" />
-          <div className="absolute inset-0 flex items-center justify-center text-text-3 text-xs">
-            Demo skanera
+          <div className="absolute inset-0 flex items-center justify-center">
+            <QrCode className="h-12 w-12 text-primary/30" />
           </div>
         </div>
         <p className="mt-3 text-[12px] text-text-3">Aparat dostępny w wersji mobilnej</p>
@@ -53,6 +54,19 @@ function QrPage() {
           </div>
         </div>
       </div>
+
+      <SectionHeader title="Apple Wallet" />
+      <div className="mx-4 grid grid-cols-2 gap-2">
+        <button className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-4 active:border-primary">
+          <CreditCard className="h-6 w-6 text-brand-glow" />
+          <span className="text-center text-[11px] font-medium text-text-2">Karta studenta<br />w Wallet</span>
+        </button>
+        <button className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-4 active:border-primary">
+          <QrCode className="h-6 w-6 text-gold" />
+          <span className="text-center text-[11px] font-medium text-text-2">QR do transferu<br />w Wallet</span>
+        </button>
+      </div>
+      <div className="h-6" />
     </div>
   );
 }

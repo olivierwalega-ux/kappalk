@@ -1,10 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Flame, TrendingUp, QrCode, Send, Trophy } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Flame, TrendingUp, QrCode, Send, Trophy, Check, Zap, Target, Users } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/integrations/supabase/client";
-import { StatusBar } from "@/components/phone-shell";
+import { StatusBar, SectionHeader } from "@/components/phone-shell";
 import { formatPts, greeting } from "@/lib/format";
 
 export const Route = createFileRoute("/app/")({
@@ -30,6 +29,13 @@ function HomePage() {
   const pts = profile?.points ?? 0;
   const nextLevel = (profile?.level ?? 1) * 200;
   const progress = Math.min(100, Math.round((pts / nextLevel) * 100));
+
+  const missions = [
+    { icon: QrCode, color: "var(--green)", bg: "rgba(62,200,122,.15)", title: "Zeskanuj 1 QR", pts: 50, prog: 100, frac: "1/1", done: true },
+    { icon: Zap, color: "var(--brand-glow)", bg: "rgba(123,110,246,.15)", title: "3 aktywności", pts: 30, prog: 66, frac: "2/3", done: false },
+    { icon: Trophy, color: "var(--gold)", bg: "rgba(245,200,66,.12)", title: "Top 10 tygodnia", pts: 200, prog: 80, frac: "8/10", done: false },
+    { icon: Target, color: "var(--pink)", bg: "rgba(232,96,122,.12)", title: "Seria 7 dni", pts: 80, prog: 100, frac: "7/7", done: true },
+  ];
 
   return (
     <div className="animate-fade-in">
@@ -89,49 +95,84 @@ function HomePage() {
         </Link>
         <Link to="/app/discover" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3.5 active:opacity-70">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gold/20">
-            <Trophy className="h-5 w-5 text-gold" />
+            <Users className="h-5 w-5 text-gold" />
           </div>
-          <span className="text-xs font-medium">Eventy</span>
+          <span className="text-xs font-medium">Społeczność</span>
         </Link>
       </div>
 
-      {/* TODAY EVENTS */}
-      <div className="mx-4 mt-5">
-        <h2 className="font-display mb-2 text-[15px] font-bold">Dziś na kampusie</h2>
-        <div className="bg-surface-2 overflow-hidden rounded-2xl border border-soft">
-          {events.length === 0 && <div className="p-4 text-sm text-text-2">Brak aktywnych wydarzeń.</div>}
-          {events.map((e) => (
-            <Link key={e.id} to="/app/discover" className="flex items-center gap-3 border-b border-soft px-4 py-3 last:border-b-0 active:bg-surface-3">
-              <div className="h-2 w-2 shrink-0 rounded-full" style={{ background: colorVar(e.color) }} />
-              <div className="min-w-0 flex-1">
-                <div className="truncate text-sm font-medium">{e.title}</div>
-                <div className="text-[11px] text-text-2">{e.location}</div>
+      {/* MISJE DNIA — 2x2 */}
+      <SectionHeader title="Misje dnia" action={<Link to="/app/discover">Wszystkie</Link>} />
+      <div className="mx-4 grid grid-cols-2 gap-2">
+        {missions.map((m) => (
+          <div key={m.title} className="bg-surface-2 rounded-2xl border border-soft p-3">
+            <div className="mb-2 flex items-center justify-between">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl" style={{ background: m.bg }}>
+                <m.icon className="h-4 w-4" style={{ color: m.color }} />
               </div>
-              <div className="font-display text-sm font-semibold text-brand-glow">+{e.points}</div>
-            </Link>
+              <span className="font-display text-[13px] font-bold" style={{ color: m.done ? "var(--green)" : m.color }}>+{m.pts}</span>
+            </div>
+            <div className="mb-1.5 text-[12px] font-semibold text-text-1">{m.title}</div>
+            <div className="bg-surface-3 mb-1 h-1 overflow-hidden rounded-full">
+              <div className="h-full rounded-full" style={{ width: `${m.prog}%`, background: m.done ? "var(--gradient-success)" : "var(--gradient-brand)" }} />
+            </div>
+            <div className="flex justify-between text-[10px]">
+              <span className="text-text-3">{m.frac}</span>
+              <span className={m.done ? "font-semibold text-green" : "text-text-2"}>{m.done ? "✓ Gotowe" : "W trakcie"}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* SERIA */}
+      <div className="bg-surface-2 mx-4 mt-3 flex items-center gap-3 rounded-2xl border border-soft p-3">
+        <span className="text-[12px] font-semibold text-text-2">Seria</span>
+        <div className="flex items-center gap-1.5">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="bg-primary flex h-6 w-6 items-center justify-center rounded-full">
+              <Check className="h-3 w-3 text-white" strokeWidth={3} />
+            </div>
           ))}
+          <div className="bg-gold flex h-7 w-7 items-center justify-center rounded-full shadow-[0_0_12px_rgba(245,200,66,0.5)]">
+            <Check className="h-3.5 w-3.5 text-black" strokeWidth={3} />
+          </div>
         </div>
       </div>
 
-      {/* ACTIVITY */}
-      <div className="mx-4 mt-5">
-        <h2 className="font-display mb-2 text-[15px] font-bold">Ostatnia aktywność</h2>
-        <div className="bg-surface-2 overflow-hidden rounded-2xl border border-soft">
-          {tx.length === 0 && <div className="p-4 text-sm text-text-2">Brak transakcji. Odbierz pierwsze punkty z eventu!</div>}
-          {tx.map((t) => (
-            <div key={t.id} className="flex items-center gap-3 border-b border-soft px-4 py-3 last:border-b-0">
-              <div className="min-w-0 flex-1">
-                <div className="truncate text-sm font-medium">{t.description ?? t.type}</div>
-                <div className="text-[11px] text-text-2">{new Date(t.created_at).toLocaleString("pl-PL")}</div>
-              </div>
-              <div className={`font-display text-sm font-bold ${t.amount >= 0 ? "text-green" : "text-pink"}`}>
-                {t.amount >= 0 ? "+" : ""}
-                {t.amount}
-              </div>
+      {/* TODAY EVENTS */}
+      <SectionHeader title="Dziś na kampusie" action={<Link to="/app/discover">Odkryj</Link>} />
+      <div className="bg-surface-2 mx-4 overflow-hidden rounded-2xl border border-soft">
+        {events.length === 0 && <div className="p-4 text-sm text-text-2">Brak aktywnych wydarzeń.</div>}
+        {events.map((e) => (
+          <Link key={e.id} to="/app/discover" className="flex items-center gap-3 border-b border-soft px-4 py-3 last:border-b-0 active:bg-surface-3">
+            <div className="h-2 w-2 shrink-0 rounded-full" style={{ background: colorVar(e.color) }} />
+            <div className="min-w-0 flex-1">
+              <div className="truncate text-sm font-medium">{e.title}</div>
+              <div className="text-[11px] text-text-2">{e.location}</div>
             </div>
-          ))}
-        </div>
+            <div className="font-display text-sm font-semibold text-brand-glow">+{e.points}</div>
+          </Link>
+        ))}
       </div>
+
+      {/* ACTIVITY */}
+      <SectionHeader title="Ostatnia aktywność" action="Wszystkie" />
+      <div className="bg-surface-2 mx-4 overflow-hidden rounded-2xl border border-soft">
+        {tx.length === 0 && <div className="p-4 text-sm text-text-2">Brak transakcji. Odbierz pierwsze punkty z eventu!</div>}
+        {tx.map((t) => (
+          <div key={t.id} className="flex items-center gap-3 border-b border-soft px-4 py-3 last:border-b-0">
+            <div className="min-w-0 flex-1">
+              <div className="truncate text-sm font-medium">{t.description ?? t.type}</div>
+              <div className="text-[11px] text-text-2">{new Date(t.created_at).toLocaleString("pl-PL")}</div>
+            </div>
+            <div className={`font-display text-sm font-bold ${t.amount >= 0 ? "text-green" : "text-pink"}`}>
+              {t.amount >= 0 ? "+" : ""}
+              {t.amount}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="h-6" />
     </div>
   );
 }
