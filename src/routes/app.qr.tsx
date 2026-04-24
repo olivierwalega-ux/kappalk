@@ -1,5 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { CreditCard, QrCode } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { CreditCard, QrCode, Send } from "lucide-react";
+import { toast } from "sonner";
 import { useAuth } from "@/lib/auth-context";
 import { StatusBar, PageHeader, SectionHeader } from "@/components/phone-shell";
 import { formatPts } from "@/lib/format";
@@ -11,6 +12,7 @@ export const Route = createFileRoute("/app/qr")({
 
 function QrPage() {
   const { profile } = useAuth();
+  const walletInfo = () => toast.info("Dodawanie do Apple Wallet dostępne w wersji mobilnej iOS");
   return (
     <div className="animate-fade-in">
       <StatusBar />
@@ -44,7 +46,7 @@ function QrPage() {
             <rect x="13" y="12" width="4" height="2" fill="#000" />
           </svg>
         </div>
-        <div>
+        <div className="min-w-0 flex-1">
           <div className="font-display text-base font-bold">
             {profile?.first_name} {profile?.last_name}
           </div>
@@ -55,13 +57,20 @@ function QrPage() {
         </div>
       </div>
 
+      <Link
+        to="/app/transfer"
+        className="bg-gradient-brand shadow-glow font-display mx-4 mt-3 flex w-[calc(100%-2rem)] items-center justify-center gap-2 rounded-2xl py-3.5 text-sm font-bold text-white active:scale-[0.98]"
+      >
+        <Send className="h-4 w-4" /> Wyślij punkty znajomemu
+      </Link>
+
       <SectionHeader title="Apple Wallet" />
       <div className="mx-4 grid grid-cols-2 gap-2">
-        <button className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-4 active:border-primary">
+        <button onClick={walletInfo} className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-4 active:border-primary">
           <CreditCard className="h-6 w-6 text-brand-glow" />
           <span className="text-center text-[11px] font-medium text-text-2">Karta studenta<br />w Wallet</span>
         </button>
-        <button className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-4 active:border-primary">
+        <button onClick={walletInfo} className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-4 active:border-primary">
           <QrCode className="h-6 w-6 text-gold" />
           <span className="text-center text-[11px] font-medium text-text-2">QR do transferu<br />w Wallet</span>
         </button>
