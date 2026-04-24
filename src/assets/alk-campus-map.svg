@@ -1,0 +1,127 @@
+<svg width="720" height="540" viewBox="0 0 720 540" xmlns="http://www.w3.org/2000/svg" font-family="'Helvetica Neue', Arial, sans-serif">
+
+  <!-- Tło -->
+  <rect width="720" height="540" fill="#F2F4F7"/>
+
+  <!-- Zieleń za budynkami (góra = parking + zieleń) -->
+  <rect x="0" y="0" width="720" height="80" fill="#E0EAD8"/>
+
+  <!-- Parking za budynkami -->
+  <rect x="30" y="10" width="580" height="65" rx="6" fill="#D5DCE8" stroke="#B0B8C8" stroke-width="0.8"/>
+  <line x1="30"  y1="37" x2="610" y2="37"  stroke="#C0C8D5" stroke-width="0.5"/>
+  <line x1="30"  y1="57" x2="610" y2="57"  stroke="#C0C8D5" stroke-width="0.5"/>
+  <line x1="105" y1="10" x2="105" y2="75"  stroke="#C0C8D5" stroke-width="0.5"/>
+  <line x1="180" y1="10" x2="180" y2="75"  stroke="#C0C8D5" stroke-width="0.5"/>
+  <line x1="255" y1="10" x2="255" y2="75"  stroke="#C0C8D5" stroke-width="0.5"/>
+  <line x1="330" y1="10" x2="330" y2="75"  stroke="#C0C8D5" stroke-width="0.5"/>
+  <line x1="405" y1="10" x2="405" y2="75"  stroke="#C0C8D5" stroke-width="0.5"/>
+  <line x1="480" y1="10" x2="480" y2="75"  stroke="#C0C8D5" stroke-width="0.5"/>
+  <line x1="555" y1="10" x2="555" y2="75"  stroke="#C0C8D5" stroke-width="0.5"/>
+  <text font-size="11" font-weight="600" letter-spacing="1" fill="#8A95AA" x="320" y="50" text-anchor="middle">PARKING</text>
+
+  <!-- Zieleń boczna lewa -->
+  <rect x="0" y="80" width="30" height="380" fill="#E4EDE0"/>
+  <!-- Zieleń boczna prawa (za Jagiellońską) -->
+  <rect x="660" y="80" width="60" height="380" fill="#E4EDE0"/>
+
+  <!-- ═══════════════════════════════════════
+       BUDYNEK D — po lewej, z dziedzińcem
+       x=30..240, y=100..390
+       ═══════════════════════════════════════ -->
+  <!-- cień -->
+  <rect x="33" y="103" width="210" height="290" rx="10" fill="#00000014"/>
+  <!-- bryła główna -->
+  <rect x="30" y="100" width="210" height="290" rx="10" fill="#FFFFFF" stroke="#4A7EC8" stroke-width="1.5"/>
+  <!-- dziedziniec wewnętrzny -->
+  <rect x="68" y="155" width="134" height="130" rx="6" fill="#E4EDE0" stroke="#A8C0E0" stroke-width="0.8"/>
+  <!-- etykieta -->
+  <text font-size="15" font-weight="700" fill="#1A3F7A" x="135" y="320" text-anchor="middle">Budynek D</text>
+  <text font-size="10" fill="#4A6FA5" x="135" y="337" text-anchor="middle">Dziekanat · Biblioteka · Atrium</text>
+
+  <!-- wejście od parkingu (góra D) -->
+  <rect x="118" y="96" width="34" height="8" rx="2" fill="#E05A2B"/>
+  <text font-size="9" fill="#C04020" x="135" y="89" text-anchor="middle">wejście od parkingu</text>
+
+  <!-- ═══════════════════════════
+       ŁĄCZNIK D ↔ A/B/C
+       x=240..320, y=220..290
+       ═══════════════════════════ -->
+  <rect x="240" y="222" width="80" height="56" rx="4" fill="#E8EBF2" stroke="#C0C8D5" stroke-width="0.8"/>
+  <text font-size="9" fill="#9AA0B0" x="280" y="252" text-anchor="middle" dominant-baseline="central">łącznik</text>
+
+  <!-- ═══════════════════════════════════════════════════
+       KOMPLEKS A/B/C — po prawej, kształt litery E
+       Kręgosłup pionowy: x=320..430, y=100..440
+       Zęby wystają W PRAWO: x=430..620
+       ═══════════════════════════════════════════════════ -->
+
+  <!-- cień kręgosłupa -->
+  <rect x="323" y="103" width="113" height="340" fill="#00000012"/>
+  <!-- kręgosłup E -->
+  <rect x="320" y="100" width="113" height="340" rx="0" fill="#FFFFFF" stroke="#4A7EC8" stroke-width="1.5"/>
+
+  <!-- BUDYNEK C — górny ząb (aula) y=100..200 -->
+  <rect x="320" y="100" width="300" height="100" rx="10" fill="#EDE8F8" stroke="#7A5CC5" stroke-width="1.5"/>
+  <text font-size="14" font-weight="700" fill="#3A1E7A" x="470" y="144" text-anchor="middle">Budynek C</text>
+  <text font-size="10" fill="#5A3EA0" x="470" y="160" text-anchor="middle">Aula · Sale wykładowe</text>
+  <!-- wejście do auli od strony D -->
+  <rect x="316" y="135" width="8" height="30" rx="2" fill="#E05A2B"/>
+  <text font-size="9" fill="#C04020" x="308" y="148" text-anchor="end">wejście</text>
+  <text font-size="9" fill="#C04020" x="308" y="159" text-anchor="end">do auli</text>
+
+  <!-- przerwa C/B -->
+  <rect x="433" y="200" width="187" height="22" rx="0" fill="#F2F4F7"/>
+
+  <!-- BUDYNEK B — środkowy ząb y=222..278 -->
+  <rect x="320" y="222" width="300" height="56" rx="6" fill="#E8F4E8" stroke="#3D8C3D" stroke-width="1.5"/>
+  <text font-size="13" font-weight="700" fill="#1A4D1A" x="470" y="252" text-anchor="middle" dominant-baseline="central">Budynek B</text>
+
+  <!-- przerwa B/A -->
+  <rect x="433" y="278" width="187" height="22" rx="0" fill="#F2F4F7"/>
+
+  <!-- BUDYNEK A — dolny duży ząb y=300..440 -->
+  <rect x="320" y="300" width="300" height="140" rx="10" fill="#E0F2EC" stroke="#2E8B6E" stroke-width="1.5"/>
+  <text font-size="14" font-weight="700" fill="#0E4D38" x="470" y="362" text-anchor="middle">Budynek A</text>
+  <text font-size="10" fill="#1A6E52" x="470" y="379" text-anchor="middle">Sale dydaktyczne</text>
+  <text font-size="10" fill="#1A6E52" x="470" y="394" text-anchor="middle">Ministerstwo Smaku</text>
+
+  <!-- wejście główne (prawy bok A, od Jagiellońskiej) -->
+  <rect x="618" y="345" width="8" height="36" rx="2" fill="#E8A800"/>
+  <text font-size="9" font-weight="600" fill="#B07800" x="632" y="357" text-anchor="start">wejście</text>
+  <text font-size="9" font-weight="600" fill="#B07800" x="632" y="368" text-anchor="start">główne</text>
+
+  <!-- ═══════════════════════
+       ULICA JAGIELLOŃSKA
+       ═══════════════════════ -->
+  <rect x="645" y="80" width="50" height="380" fill="#E2E5F0"/>
+  <line x1="660" y1="80" x2="660" y2="460" stroke="#C8CCDC" stroke-width="1.5"/>
+  <line x1="678" y1="80" x2="678" y2="460" stroke="#C8CCDC" stroke-width="1.5"/>
+  <text font-size="11" font-weight="600" letter-spacing="2" fill="#8A95AA"
+        x="670" y="270" text-anchor="middle"
+        transform="rotate(90 670 270)">Jagiellońska</text>
+
+  <!-- ═══════════════
+       ULICA DOLNA
+       ═══════════════ -->
+  <rect x="0" y="460" width="645" height="50" fill="#E2E4EC"/>
+  <text font-size="11" fill="#8A95AA" x="320" y="486" text-anchor="middle" dominant-baseline="central">ul. Jagiellońska 57/59</text>
+
+  <!-- ═══════════
+       LEGENDA
+       ═══════════ -->
+  <rect x="30" y="396" width="180" height="130" rx="8" fill="#FFFFFF" stroke="#D0D5DF" stroke-width="0.8"/>
+  <text font-size="10" font-weight="700" fill="#333" x="120" y="415" text-anchor="middle">LEGENDA</text>
+  <rect x="42" y="424" width="10" height="10" rx="2" fill="#4A7EC8"/>
+  <text font-size="9" fill="#444" x="58" y="434">Budynek D – Dziekanat</text>
+  <rect x="42" y="440" width="10" height="10" rx="2" fill="#7A5CC5"/>
+  <text font-size="9" fill="#444" x="58" y="450">Budynek C – Aula</text>
+  <rect x="42" y="456" width="10" height="10" rx="2" fill="#3D8C3D"/>
+  <text font-size="9" fill="#444" x="58" y="466">Budynek B</text>
+  <rect x="42" y="472" width="10" height="10" rx="2" fill="#2E8B6E"/>
+  <text font-size="9" fill="#444" x="58" y="482">Budynek A</text>
+  <rect x="42" y="488" width="10" height="10" rx="2" fill="#E8A800"/>
+  <text font-size="9" fill="#444" x="58" y="498">Wejście główne</text>
+  <rect x="42" y="504" width="10" height="10" rx="2" fill="#E05A2B"/>
+  <text font-size="9" fill="#444" x="58" y="514">Wejście od parkingu</text>
+
+</svg>
