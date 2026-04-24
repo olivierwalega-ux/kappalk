@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 
-/** Mobile-first phone container — full screen on mobile, centered card on desktop */
+/** Pełnoekranowy mobilny układ aplikacji KAPP. */
 export function PhoneShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen w-full bg-background">
-      <div className="relative mx-auto flex min-h-screen max-w-md flex-col bg-background">
+      <div className="relative mx-auto flex min-h-screen w-full max-w-[440px] flex-col bg-background">
         {children}
       </div>
     </div>
@@ -13,7 +13,7 @@ export function PhoneShell({ children }: { children: ReactNode }) {
 
 export function StatusBar() {
   return (
-    <div className="sticky top-0 z-30 flex items-center justify-between bg-gradient-to-b from-background via-background/80 to-transparent px-6 pt-12 pb-1">
+    <div className="sticky top-0 z-30 flex items-center justify-between bg-gradient-to-b from-background via-background/85 to-transparent px-6 pt-12 pb-1">
       <span className="font-display text-sm font-semibold text-text-1">9:41</span>
       <div className="flex items-center gap-1.5 opacity-70">
         <svg width="15" height="11" viewBox="0 0 15 11" fill="currentColor" className="text-text-1">
@@ -46,9 +46,41 @@ export function PageHeader({ title, subtitle, action }: { title: string; subtitl
 
 export function SectionHeader({ title, action }: { title: string; action?: ReactNode }) {
   return (
-    <div className="flex items-center justify-between px-6 pt-5 pb-2.5">
+    <div className="flex items-center justify-between px-6 pt-5 pb-2">
       <h2 className="font-display text-[15px] font-bold text-text-1">{title}</h2>
       {action && <div className="text-xs font-medium text-brand-glow">{action}</div>}
+    </div>
+  );
+}
+
+/** Poziome chipy zakładek — scroll horyzontalny */
+export function Chips<T extends string>({
+  options,
+  value,
+  onChange,
+}: {
+  options: { id: T; label: string }[];
+  value: T;
+  onChange: (id: T) => void;
+}) {
+  return (
+    <div className="scrollbar-none flex gap-2 overflow-x-auto px-6 pb-3">
+      {options.map((o) => {
+        const on = o.id === value;
+        return (
+          <button
+            key={o.id}
+            onClick={() => onChange(o.id)}
+            className={`shrink-0 whitespace-nowrap rounded-full border px-3.5 py-1.5 text-xs font-medium transition active:scale-95 ${
+              on
+                ? "border-primary/30 bg-primary/15 text-brand-glow"
+                : "bg-surface-2 border-soft text-text-2"
+            }`}
+          >
+            {o.label}
+          </button>
+        );
+      })}
     </div>
   );
 }
