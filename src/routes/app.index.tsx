@@ -119,24 +119,43 @@ function HomePage() {
       {/* MISJE DNIA — 2x2 */}
       <SectionHeader title="Misje dnia" action={<Link to="/app/discover">Wszystkie</Link>} />
       <div className="mx-4 grid grid-cols-2 gap-2">
-        {missions.map((m) => (
-          <div key={m.title} className="bg-surface-2 rounded-2xl border border-soft p-3">
-            <div className="mb-2 flex items-center justify-between">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl" style={{ background: m.bg }}>
-                <m.icon className="h-4 w-4" style={{ color: m.color }} />
-              </div>
-              <span className="font-display text-[13px] font-bold" style={{ color: m.done ? "var(--green)" : m.color }}>+{m.pts}</span>
-            </div>
-            <div className="mb-1.5 text-[12px] font-semibold text-text-1">{m.title}</div>
-            <div className="bg-surface-3 mb-1 h-1 overflow-hidden rounded-full">
-              <div className="h-full rounded-full" style={{ width: `${m.prog}%`, background: m.done ? "var(--gradient-success)" : "var(--gradient-brand)" }} />
-            </div>
-            <div className="flex justify-between text-[10px]">
-              <span className="text-text-3">{m.frac}</span>
-              <span className={m.done ? "font-semibold text-green" : "text-text-2"}>{m.done ? "✓ Gotowe" : "W trakcie"}</span>
-            </div>
+        {missions.length === 0 && (
+          <div className="bg-surface-2 col-span-2 rounded-2xl border border-soft p-4 text-sm text-text-2">
+            Brak aktywnych misji.
           </div>
-        ))}
+        )}
+        {missions.map((m) => {
+          const Icon = getIcon(m.icon);
+          const c = getColor(m.color);
+          return (
+            <div key={m.id} className="bg-surface-2 rounded-2xl border border-soft p-3">
+              <div className="mb-2 flex items-center justify-between">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl" style={{ background: c.bg }}>
+                  <Icon className="h-4 w-4" style={{ color: c.fg }} />
+                </div>
+                <span className="font-display text-[13px] font-bold" style={{ color: m.completed ? "var(--green)" : c.fg }}>
+                  +{m.bonus_points}
+                </span>
+              </div>
+              <div className="mb-1.5 text-[12px] font-semibold text-text-1">{m.title}</div>
+              <div className="bg-surface-3 mb-1 h-1 overflow-hidden rounded-full">
+                <div
+                  className="h-full rounded-full"
+                  style={{
+                    width: `${m.percent}%`,
+                    background: m.completed ? "var(--gradient-success)" : "var(--gradient-brand)",
+                  }}
+                />
+              </div>
+              <div className="flex justify-between text-[10px]">
+                <span className="text-text-3">{m.fraction}</span>
+                <span className={m.completed ? "font-semibold text-green" : "text-text-2"}>
+                  {m.completed ? "✓ Gotowe" : "W trakcie"}
+                </span>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* SERIA */}
