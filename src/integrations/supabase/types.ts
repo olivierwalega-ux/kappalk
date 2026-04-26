@@ -151,6 +151,38 @@ export type Database = {
           },
         ]
       }
+      user_events: {
+        Row: {
+          event_id: string
+          id: string
+          points_awarded: number
+          scanned_at: string
+          user_id: string
+        }
+        Insert: {
+          event_id: string
+          id?: string
+          points_awarded?: number
+          scanned_at?: string
+          user_id: string
+        }
+        Update: {
+          event_id?: string
+          id?: string
+          points_awarded?: number
+          scanned_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_events_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
