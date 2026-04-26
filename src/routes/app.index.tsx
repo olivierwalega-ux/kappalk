@@ -19,12 +19,31 @@ function HomePage() {
   const [tx, setTx] = useState<Tx[]>([]);
   const [events, setEvents] = useState<Ev[]>([]);
 
+  const { user } = useAuth();
+
   useEffect(() => {
-    supabase.from("transactions").select("id,description,amount,created_at,type").order("created_at", { ascending: false }).limit(5)
-      .then(({ data }) => setTx((data as Tx[]) ?? []));
+    const loadTx = () =>
+      supabase.from("transactions").select("id,description,amount,created_at,type").order("created_at", { ascending: false }).limit(5)
+        .then(({ data }) => setTx((data as Tx[]) ?? []));
+
+    loadTx();
     supabase.from("events").select("id,title,location,points,color").eq("is_active", true).limit(4)
       .then(({ data }) => setEvents((data as Ev[]) ?? []));
-  }, []);
+
+    if (!user) return;
+    // Realtime: refresh transactions whenever a new one lands for this user
+    const channel = supabase
+      .channel(`tx:${user.id}`)
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "transactions", filter: `user_id=eq.${user.id}` },
+        () => loadTx(),
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user?.id]);
 
   const pts = profile?.points ?? 0;
   const nextLevel = (profile?.level ?? 1) * 200;
