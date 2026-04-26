@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Flame, TrendingUp, QrCode, Send, Trophy, Check, Zap, Target, Users } from "lucide-react";
+import { Flame, TrendingUp, QrCode, Send, Trophy, Check, Users } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/integrations/supabase/client";
 import { StatusBar, SectionHeader } from "@/components/phone-shell";
 import { formatPts, greeting } from "@/lib/format";
+import { useMissions, getIcon, getColor } from "@/lib/missions";
 
 export const Route = createFileRoute("/app/")({
   head: () => ({ meta: [{ title: "KAPP — Home" }] }),
@@ -49,12 +50,7 @@ function HomePage() {
   const nextLevel = (profile?.level ?? 1) * 200;
   const progress = Math.min(100, Math.round((pts / nextLevel) * 100));
 
-  const missions = [
-    { icon: QrCode, color: "var(--green)", bg: "rgba(62,200,122,.15)", title: "Zeskanuj 1 QR", pts: 50, prog: 100, frac: "1/1", done: true },
-    { icon: Zap, color: "var(--brand-glow)", bg: "rgba(123,110,246,.15)", title: "3 aktywności", pts: 30, prog: 66, frac: "2/3", done: false },
-    { icon: Trophy, color: "var(--gold)", bg: "rgba(245,200,66,.12)", title: "Top 10 tygodnia", pts: 200, prog: 80, frac: "8/10", done: false },
-    { icon: Target, color: "var(--pink)", bg: "rgba(232,96,122,.12)", title: "Seria 7 dni", pts: 80, prog: 100, frac: "7/7", done: true },
-  ];
+  const { missions } = useMissions("mission");
 
   return (
     <div className="animate-fade-in">
@@ -123,24 +119,43 @@ function HomePage() {
       {/* MISJE DNIA — 2x2 */}
       <SectionHeader title="Misje dnia" action={<Link to="/app/discover">Wszystkie</Link>} />
       <div className="mx-4 grid grid-cols-2 gap-2">
-        {missions.map((m) => (
-          <div key={m.title} className="bg-surface-2 rounded-2xl border border-soft p-3">
-            <div className="mb-2 flex items-center justify-between">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl" style={{ background: m.bg }}>
-                <m.icon className="h-4 w-4" style={{ color: m.color }} />
-              </div>
-              <span className="font-display text-[13px] font-bold" style={{ color: m.done ? "var(--green)" : m.color }}>+{m.pts}</span>
-            </div>
-            <div className="mb-1.5 text-[12px] font-semibold text-text-1">{m.title}</div>
-            <div className="bg-surface-3 mb-1 h-1 overflow-hidden rounded-full">
-              <div className="h-full rounded-full" style={{ width: `${m.prog}%`, background: m.done ? "var(--gradient-success)" : "var(--gradient-brand)" }} />
-            </div>
-            <div className="flex justify-between text-[10px]">
-              <span className="text-text-3">{m.frac}</span>
-              <span className={m.done ? "font-semibold text-green" : "text-text-2"}>{m.done ? "✓ Gotowe" : "W trakcie"}</span>
-            </div>
+        {missions.length === 0 && (
+          <div className="bg-surface-2 col-span-2 rounded-2xl border border-soft p-4 text-sm text-text-2">
+            Brak aktywnych misji.
           </div>
-        ))}
+        )}
+        {missions.map((m) => {
+          const Icon = getIcon(m.icon);
+          const c = getColor(m.color);
+          return (
+            <div key={m.id} className="bg-surface-2 rounded-2xl border border-soft p-3">
+              <div className="mb-2 flex items-center justify-between">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl" style={{ background: c.bg }}>
+                  <Icon className="h-4 w-4" style={{ color: c.fg }} />
+                </div>
+                <span className="font-display text-[13px] font-bold" style={{ color: m.completed ? "var(--green)" : c.fg }}>
+                  +{m.bonus_points}
+                </span>
+              </div>
+              <div className="mb-1.5 text-[12px] font-semibold text-text-1">{m.title}</div>
+              <div className="bg-surface-3 mb-1 h-1 overflow-hidden rounded-full">
+                <div
+                  className="h-full rounded-full"
+                  style={{
+                    width: `${m.percent}%`,
+                    background: m.completed ? "var(--gradient-success)" : "var(--gradient-brand)",
+                  }}
+                />
+              </div>
+              <div className="flex justify-between text-[10px]">
+                <span className="text-text-3">{m.fraction}</span>
+                <span className={m.completed ? "font-semibold text-green" : "text-text-2"}>
+                  {m.completed ? "✓ Gotowe" : "W trakcie"}
+                </span>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* SERIA */}

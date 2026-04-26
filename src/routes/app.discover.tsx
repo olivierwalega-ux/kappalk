@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Trophy, Users, Megaphone, Plus, BookOpen, Briefcase, ShoppingCart, Heart, Activity, Star } from "lucide-react";
+import { Trophy, Users, Megaphone, Plus, BookOpen, Briefcase, ShoppingCart, Heart, Activity } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
 import { StatusBar, PageHeader, Chips, SectionHeader } from "@/components/phone-shell";
+import { useMissions, getIcon, getColor } from "@/lib/missions";
 import campusMap from "@/assets/alk-campus-map.svg";
 
 export const Route = createFileRoute("/app/discover")({
@@ -144,39 +145,58 @@ function EventsTab({ events, loading, claimed, onClaim }: { events: Ev[]; loadin
 }
 
 function ChallengesTab() {
-  const items = [
-    { icon: Star, color: "var(--brand-glow)", bg: "rgba(123,110,246,.2)", title: "Weź udział w 3 eventach", sub: "1 z 3 ukończono", pts: 200, prog: 33, done: false },
-    { icon: Users, color: "var(--green)", bg: "rgba(62,200,122,.15)", title: "Wyślij punkty 2 znajomym", sub: "2 z 2 ukończono ✓", pts: 100, prog: 100, done: true },
-    { icon: Activity, color: "var(--gold)", bg: "rgba(245,200,66,.12)", title: "7-dniowy streak aktywności", sub: "7 z 7 — ukończono ✓", pts: 150, prog: 100, done: true },
-    { icon: Trophy, color: "var(--pink)", bg: "rgba(232,96,122,.12)", title: "Zdobądź 500 pkt w tygodniu", sub: "320 z 500", pts: 80, prog: 64, done: false },
-  ];
+  const { missions, loading } = useMissions("challenge");
   return (
     <div>
-      <SectionHeader title="Wyzwania tygodnia" action="Reset: 3 dni" />
+      <SectionHeader title="Wyzwania tygodnia" action="Reset: niedziela" />
       <div className="mx-4 space-y-2">
-        {items.map((c) => (
-          <div key={c.title} className="bg-surface-2 overflow-hidden rounded-2xl border border-soft">
-            <div className="flex items-center gap-3 border-b border-soft px-4 py-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ background: c.bg }}>
-                <c.icon className="h-4 w-4" style={{ color: c.color }} />
-              </div>
-              <div className="flex-1">
-                <div className="text-sm font-medium text-text-1">{c.title}</div>
-                <div className="text-[11px] text-text-2">{c.sub}</div>
-              </div>
-              <div className="font-display text-sm font-semibold" style={{ color: c.done ? "var(--green)" : "var(--brand-glow)" }}>+{c.pts} pkt</div>
-            </div>
-            <div className="px-4 py-3">
-              <div className="mb-1.5 flex justify-between text-[11px] text-text-2">
-                <span>{c.done ? "Ukończono!" : "Postęp"}</span>
-                <span style={{ color: c.done ? "var(--green)" : "var(--brand-glow)" }}>{c.prog}%</span>
-              </div>
-              <div className="bg-surface-3 h-1.5 overflow-hidden rounded-full">
-                <div className="h-full rounded-full" style={{ width: `${c.prog}%`, background: c.done ? "var(--gradient-success)" : "var(--gradient-brand)" }} />
-              </div>
-            </div>
+        {loading && <div className="text-sm text-text-2">Ładowanie…</div>}
+        {!loading && missions.length === 0 && (
+          <div className="bg-surface-2 rounded-2xl border border-soft p-4 text-sm text-text-2">
+            Brak aktywnych wyzwań w tym tygodniu.
           </div>
-        ))}
+        )}
+        {missions.map((c) => {
+          const Icon = getIcon(c.icon);
+          const col = getColor(c.color);
+          const subtitle = c.completed
+            ? `${c.fraction} — ukończono ✓`
+            : `${c.progress} z ${c.target} ukończono`;
+          return (
+            <div key={c.id} className="bg-surface-2 overflow-hidden rounded-2xl border border-soft">
+              <div className="flex items-center gap-3 border-b border-soft px-4 py-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ background: col.bg }}>
+                  <Icon className="h-4 w-4" style={{ color: col.fg }} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-medium text-text-1">{c.title}</div>
+                  <div className="text-[11px] text-text-2">{subtitle}</div>
+                </div>
+                <div
+                  className="font-display text-sm font-semibold"
+                  style={{ color: c.completed ? "var(--green)" : "var(--brand-glow)" }}
+                >
+                  +{c.bonus_points} pkt
+                </div>
+              </div>
+              <div className="px-4 py-3">
+                <div className="mb-1.5 flex justify-between text-[11px] text-text-2">
+                  <span>{c.completed ? "Ukończono!" : "Postęp"}</span>
+                  <span style={{ color: c.completed ? "var(--green)" : "var(--brand-glow)" }}>{c.percent}%</span>
+                </div>
+                <div className="bg-surface-3 h-1.5 overflow-hidden rounded-full">
+                  <div
+                    className="h-full rounded-full"
+                    style={{
+                      width: `${c.percent}%`,
+                      background: c.completed ? "var(--gradient-success)" : "var(--gradient-brand)",
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
