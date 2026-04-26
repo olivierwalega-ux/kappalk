@@ -59,6 +59,57 @@ export type Database = {
         }
         Relationships: []
       }
+      missions: {
+        Row: {
+          bonus_points: number
+          code: string
+          color: string
+          created_at: string
+          description: string | null
+          icon: string
+          id: string
+          is_active: boolean
+          kind: string
+          period: string
+          sort_order: number
+          target: number
+          title: string
+          trigger_event: string
+        }
+        Insert: {
+          bonus_points?: number
+          code: string
+          color?: string
+          created_at?: string
+          description?: string | null
+          icon?: string
+          id?: string
+          is_active?: boolean
+          kind: string
+          period: string
+          sort_order?: number
+          target: number
+          title: string
+          trigger_event: string
+        }
+        Update: {
+          bonus_points?: number
+          code?: string
+          color?: string
+          created_at?: string
+          description?: string | null
+          icon?: string
+          id?: string
+          is_active?: boolean
+          kind?: string
+          period?: string
+          sort_order?: number
+          target?: number
+          title?: string
+          trigger_event?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_initials: string | null
@@ -183,6 +234,50 @@ export type Database = {
           },
         ]
       }
+      user_missions: {
+        Row: {
+          bonus_awarded: boolean
+          completed: boolean
+          completed_at: string | null
+          id: string
+          mission_id: string
+          period_key: string
+          progress: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          bonus_awarded?: boolean
+          completed?: boolean
+          completed_at?: string | null
+          id?: string
+          mission_id: string
+          period_key: string
+          progress?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          bonus_awarded?: boolean
+          completed?: boolean
+          completed_at?: string | null
+          id?: string
+          mission_id?: string
+          period_key?: string
+          progress?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_missions_mission_id_fkey"
+            columns: ["mission_id"]
+            isOneToOne: false
+            referencedRelation: "missions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -209,7 +304,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      bump_mission_progress: {
+        Args: { _delta?: number; _trigger_event: string; _user_id: string }
+        Returns: undefined
+      }
       claim_event: { Args: { _event_id: string }; Returns: Json }
+      current_period_key: { Args: { _period: string }; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
