@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Flame, TrendingUp, QrCode, Send, Trophy, Check, Zap, Target, Users } from "lucide-react";
+import { Flame, TrendingUp, QrCode, Send, Trophy, Check, Users } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/integrations/supabase/client";
 import { StatusBar, SectionHeader } from "@/components/phone-shell";
 import { formatPts, greeting } from "@/lib/format";
+import { useMissions, getIcon, getColor } from "@/lib/missions";
 
 export const Route = createFileRoute("/app/")({
   head: () => ({ meta: [{ title: "KAPP — Home" }] }),
@@ -49,12 +50,7 @@ function HomePage() {
   const nextLevel = (profile?.level ?? 1) * 200;
   const progress = Math.min(100, Math.round((pts / nextLevel) * 100));
 
-  const missions = [
-    { icon: QrCode, color: "var(--green)", bg: "rgba(62,200,122,.15)", title: "Zeskanuj 1 QR", pts: 50, prog: 100, frac: "1/1", done: true },
-    { icon: Zap, color: "var(--brand-glow)", bg: "rgba(123,110,246,.15)", title: "3 aktywności", pts: 30, prog: 66, frac: "2/3", done: false },
-    { icon: Trophy, color: "var(--gold)", bg: "rgba(245,200,66,.12)", title: "Top 10 tygodnia", pts: 200, prog: 80, frac: "8/10", done: false },
-    { icon: Target, color: "var(--pink)", bg: "rgba(232,96,122,.12)", title: "Seria 7 dni", pts: 80, prog: 100, frac: "7/7", done: true },
-  ];
+  const { missions } = useMissions("mission");
 
   return (
     <div className="animate-fade-in">
