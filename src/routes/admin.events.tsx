@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState, type FormEvent } from "react";
-import { Plus, X } from "lucide-react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { Plus, X, QrCode, Printer, Download } from "lucide-react";
 import { toast } from "sonner";
+import { QRCodeCanvas } from "qrcode.react";
 import { supabase } from "@/integrations/supabase/client";
 import { StatusBar, PageHeader } from "@/components/phone-shell";
 
@@ -18,37 +19,59 @@ type Ev = {
   is_active: boolean;
   participants_count: number;
   color: string | null;
+  starts_at: string | null;
 };
 
 function AdminEvents() {
   const [events, setEvents] = useState<Ev[]>([]);
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ title: "", location: "", points: "50", category: "event" });
+  const [qrEvent, setQrEvent] = useState<Ev | null>(null);
+  const [form, setForm] = useState({
+    title: "",
+    location: "",
+    points: "50",
+    category: "event",
+    starts_at: "",
+  });
 
   const load = async () => {
-    const { data } = await supabase.from("events").select("*").order("created_at", { ascending: false });
+    const { data } = await supabase
+      .from("events")
+      .select("*")
+      .order("created_at", { ascending: false });
     setEvents((data as Ev[]) ?? []);
   };
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   const create = async (e: FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.from("events").insert({
-      title: form.title.trim(),
-      location: form.location.trim() || null,
-      points: parseInt(form.points) || 0,
-      category: form.category,
-      is_active: true,
-    });
+    const { data, error } = await supabase
+      .from("events")
+      .insert({
+        title: form.title.trim(),
+        location: form.location.trim() || null,
+        points: parseInt(form.points) || 0,
+        category: form.category,
+        starts_at: form.starts_at ? new Date(form.starts_at).toISOString() : null,
+        is_active: true,
+      })
+      .select("*")
+      .single();
     if (error) return toast.error(error.message);
     toast.success("Wydarzenie utworzone");
     setOpen(false);
-    setForm({ title: "", location: "", points: "50", category: "event" });
+    setForm({ title: "", location: "", points: "50", category: "event", starts_at: "" });
     load();
+    if (data) setQrEvent(data as Ev);
   };
 
   const toggle = async (ev: Ev) => {
-    const { error } = await supabase.from("events").update({ is_active: !ev.is_active }).eq("id", ev.id);
+    const { error } = await supabase
+      .from("events")
+      .update({ is_active: !ev.is_active })
+      .eq("id", ev.id);
     if (error) return toast.error(error.message);
     load();
   };
@@ -60,7 +83,10 @@ function AdminEvents() {
         title="Wydarzenia"
         subtitle="Zarządzaj eventami uczelni"
         action={
-          <button onClick={() => setOpen(true)} className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary">
+          <button
+            onClick={() => setOpen(true)}
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary"
+          >
             <Plus className="h-4 w-4 text-white" strokeWidth={3} />
           </button>
         }
@@ -68,12 +94,28 @@ function AdminEvents() {
 
       <div className="mx-4 mt-2 space-y-2">
         {events.map((e) => (
-          <div key={e.id} className="bg-surface-2 flex items-center gap-3 rounded-2xl border border-soft p-3.5">
-            <div className="h-2.5 w-2.5 rounded-full" style={{ background: e.is_active ? "var(--green)" : "var(--text-3)" }} />
-            <div className="flex-1">
-              <div className="text-sm font-medium">{e.title}</div>
-              <div className="text-[11px] text-text-2">{e.location ?? "—"} · {e.participants_count} uczestników</div>
+          <div
+            key={e.id}
+            className="bg-surface-2 flex items-center gap-3 rounded-2xl border border-soft p-3.5"
+          >
+            <div
+              className="h-2.5 w-2.5 rounded-full"
+              style={{ background: e.is_active ? "var(--green)" : "var(--text-3)" }}
+            />
+            <div className="flex-1 min-w-0">
+              <div className="text-sm font-medium truncate">{e.title}</div>
+              <div className="text-[11px] text-text-2 truncate">
+                {e.location ?? "—"} · {e.participants_count} uczestników
+                {e.starts_at && ` · ${new Date(e.starts_at).toLocaleDateString("pl-PL")}`}
+              </div>
             </div>
+            <button
+              onClick={() => setQrEvent(e)}
+              className="flex h-9 w-9 items-center justify-center rounded-xl border border-soft bg-surface-1"
+              title="Pokaż kod QR"
+            >
+              <QrCode className="h-4 w-4 text-text-1" />
+            </button>
             <div className="text-right">
               <div className="font-display text-sm font-bold text-brand-glow">+{e.points}</div>
               <button onClick={() => toggle(e)} className="text-[10px] text-text-3 underline">
@@ -85,7 +127,10 @@ function AdminEvents() {
       </div>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 backdrop-blur md:items-center" onClick={() => setOpen(false)}>
+        <div
+          className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 backdrop-blur md:items-center"
+          onClick={() => setOpen(false)}
+        >
           <form
             onClick={(e) => e.stopPropagation()}
             onSubmit={create}
@@ -93,10 +138,13 @@ function AdminEvents() {
           >
             <div className="flex items-center justify-between">
               <h3 className="font-display text-lg font-bold">Nowy event</h3>
-              <button type="button" onClick={() => setOpen(false)}><X className="h-5 w-5 text-text-2" /></button>
+              <button type="button" onClick={() => setOpen(false)}>
+                <X className="h-5 w-5 text-text-2" />
+              </button>
             </div>
             <input
-              required placeholder="Tytuł"
+              required
+              placeholder="Tytuł"
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
               className="w-full rounded-xl border border-input bg-surface-2 px-4 py-3 text-sm outline-none focus:border-primary"
@@ -107,9 +155,17 @@ function AdminEvents() {
               onChange={(e) => setForm({ ...form, location: e.target.value })}
               className="w-full rounded-xl border border-input bg-surface-2 px-4 py-3 text-sm outline-none focus:border-primary"
             />
+            <input
+              type="datetime-local"
+              value={form.starts_at}
+              onChange={(e) => setForm({ ...form, starts_at: e.target.value })}
+              className="w-full rounded-xl border border-input bg-surface-2 px-4 py-3 text-sm outline-none focus:border-primary"
+            />
             <div className="grid grid-cols-2 gap-2">
               <input
-                type="number" min="0" placeholder="Punkty"
+                type="number"
+                min="0"
+                placeholder="Punkty"
                 value={form.points}
                 onChange={(e) => setForm({ ...form, points: e.target.value })}
                 className="w-full rounded-xl border border-input bg-surface-2 px-4 py-3 text-sm outline-none focus:border-primary"
@@ -126,13 +182,108 @@ function AdminEvents() {
                 <option value="kariera">Kariera</option>
               </select>
             </div>
-            <button type="submit" className="bg-gradient-brand w-full rounded-xl py-3 font-display text-sm font-bold text-white">
+            <button
+              type="submit"
+              className="bg-gradient-brand w-full rounded-xl py-3 font-display text-sm font-bold text-white"
+            >
               Utwórz wydarzenie
             </button>
           </form>
         </div>
       )}
+
+      {qrEvent && <QrModal event={qrEvent} onClose={() => setQrEvent(null)} />}
+
       <div className="h-6" />
+    </div>
+  );
+}
+
+function QrModal({ event, onClose }: { event: Ev; onClose: () => void }) {
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const qrValue = event.id;
+
+  const downloadQR = () => {
+    const canvas = canvasRef.current?.querySelector("canvas");
+    if (!canvas) return;
+    const url = canvas.toDataURL("image/png");
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `qr-${event.title.replace(/\s+/g, "-").toLowerCase()}.png`;
+    a.click();
+  };
+
+  const printQR = () => {
+    const canvas = canvasRef.current?.querySelector("canvas");
+    if (!canvas) return;
+    const dataUrl = canvas.toDataURL("image/png");
+    const win = window.open("", "_blank");
+    if (!win) return;
+    win.document.write(`
+      <html>
+        <head><title>${event.title} — QR</title>
+        <style>
+          body { font-family: system-ui, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 40px; }
+          h1 { font-size: 28px; margin: 0 0 8px; }
+          p { color: #555; margin: 0 0 24px; }
+          img { width: 320px; height: 320px; }
+          .pts { margin-top: 16px; font-size: 20px; font-weight: bold; }
+        </style></head>
+        <body>
+          <h1>${event.title}</h1>
+          <p>${event.location ?? ""}</p>
+          <img src="${dataUrl}" />
+          <div class="pts">+${event.points} punktów</div>
+          <script>window.onload = () => window.print();</script>
+        </body>
+      </html>
+    `);
+    win.document.close();
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur p-4"
+      onClick={onClose}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-surface-1 w-full max-w-sm space-y-4 rounded-3xl border border-soft p-6"
+      >
+        <div className="flex items-center justify-between">
+          <h3 className="font-display text-lg font-bold">Kod QR eventu</h3>
+          <button onClick={onClose}>
+            <X className="h-5 w-5 text-text-2" />
+          </button>
+        </div>
+
+        <div className="text-center space-y-1">
+          <div className="font-display font-bold">{event.title}</div>
+          {event.location && <div className="text-xs text-text-2">{event.location}</div>}
+          <div className="text-xs font-bold text-brand-glow">+{event.points} pkt</div>
+        </div>
+
+        <div ref={canvasRef} className="flex justify-center rounded-2xl bg-white p-5">
+          <QRCodeCanvas value={qrValue} size={240} level="M" includeMargin={false} />
+        </div>
+
+        <p className="text-center text-[11px] text-text-3 break-all">{qrValue}</p>
+
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={printQR}
+            className="flex items-center justify-center gap-2 rounded-xl border border-soft bg-surface-2 py-3 text-sm font-medium"
+          >
+            <Printer className="h-4 w-4" /> Drukuj
+          </button>
+          <button
+            onClick={downloadQR}
+            className="bg-gradient-brand flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold text-white"
+          >
+            <Download className="h-4 w-4" /> Pobierz
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
