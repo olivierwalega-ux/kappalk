@@ -110,6 +110,45 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          data: Json | null
+          id: string
+          link: string | null
+          pushed: boolean
+          read: boolean
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          data?: Json | null
+          id?: string
+          link?: string | null
+          pushed?: boolean
+          read?: boolean
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          data?: Json | null
+          id?: string
+          link?: string | null
+          pushed?: boolean
+          read?: boolean
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_initials: string | null
@@ -161,6 +200,39 @@ export type Database = {
           student_id?: string | null
           updated_at?: string
           year?: number | null
+        }
+        Relationships: []
+      }
+      push_subscriptions: {
+        Row: {
+          auth: string
+          created_at: string
+          endpoint: string
+          id: string
+          last_used_at: string
+          p256dh: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          auth: string
+          created_at?: string
+          endpoint: string
+          id?: string
+          last_used_at?: string
+          p256dh: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          auth?: string
+          created_at?: string
+          endpoint?: string
+          id?: string
+          last_used_at?: string
+          p256dh?: string
+          user_agent?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -281,6 +353,27 @@ export type Database = {
           },
         ]
       }
+      user_rank_snapshots: {
+        Row: {
+          last_rank: number | null
+          updated_at: string
+          user_id: string
+          was_top10: boolean
+        }
+        Insert: {
+          last_rank?: number | null
+          updated_at?: string
+          user_id: string
+          was_top10?: boolean
+        }
+        Update: {
+          last_rank?: number | null
+          updated_at?: string
+          user_id?: string
+          was_top10?: boolean
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -312,7 +405,19 @@ export type Database = {
         Returns: undefined
       }
       bump_streak: { Args: { _user_id: string }; Returns: undefined }
+      check_rank_top10: { Args: { _user_id: string }; Returns: undefined }
       claim_event: { Args: { _event_id: string }; Returns: Json }
+      create_notification: {
+        Args: {
+          _body?: string
+          _data?: Json
+          _link?: string
+          _title: string
+          _type: string
+          _user_id: string
+        }
+        Returns: string
+      }
       current_period_key: { Args: { _period: string }; Returns: string }
       has_role: {
         Args: {
@@ -321,6 +426,8 @@ export type Database = {
         }
         Returns: boolean
       }
+      notify_events_starting_soon: { Args: never; Returns: number }
+      notify_streak_at_risk: { Args: never; Returns: number }
       reset_inactive_streaks: { Args: never; Returns: undefined }
       transfer_points: {
         Args: { _amount: number; _note?: string; _to_user: string }
