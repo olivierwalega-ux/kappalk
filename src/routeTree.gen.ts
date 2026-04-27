@@ -26,6 +26,8 @@ import { Route as AppDiscoverRouteImport } from './routes/app.discover'
 import { Route as AdminStudentsRouteImport } from './routes/admin.students'
 import { Route as AdminEventsRouteImport } from './routes/admin.events'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as ApiPublicPushVapidKeyRouteImport } from './routes/api.public.push.vapid-key'
+import { Route as ApiPublicPushDispatchRouteImport } from './routes/api.public.push.dispatch'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -112,6 +114,16 @@ const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
   path: '/analytics',
   getParentRoute: () => AdminRoute,
 } as any)
+const ApiPublicPushVapidKeyRoute = ApiPublicPushVapidKeyRouteImport.update({
+  id: '/api/public/push/vapid-key',
+  path: '/api/public/push/vapid-key',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicPushDispatchRoute = ApiPublicPushDispatchRouteImport.update({
+  id: '/api/public/push/dispatch',
+  path: '/api/public/push/dispatch',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -131,6 +143,8 @@ export interface FileRoutesByFullPath {
   '/app/university': typeof AppUniversityRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
+  '/api/public/push/dispatch': typeof ApiPublicPushDispatchRoute
+  '/api/public/push/vapid-key': typeof ApiPublicPushVapidKeyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -148,6 +162,8 @@ export interface FileRoutesByTo {
   '/app/university': typeof AppUniversityRoute
   '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
+  '/api/public/push/dispatch': typeof ApiPublicPushDispatchRoute
+  '/api/public/push/vapid-key': typeof ApiPublicPushVapidKeyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -168,6 +184,8 @@ export interface FileRoutesById {
   '/app/university': typeof AppUniversityRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
+  '/api/public/push/dispatch': typeof ApiPublicPushDispatchRoute
+  '/api/public/push/vapid-key': typeof ApiPublicPushVapidKeyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -189,6 +207,8 @@ export interface FileRouteTypes {
     | '/app/university'
     | '/admin/'
     | '/app/'
+    | '/api/public/push/dispatch'
+    | '/api/public/push/vapid-key'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -206,6 +226,8 @@ export interface FileRouteTypes {
     | '/app/university'
     | '/admin'
     | '/app'
+    | '/api/public/push/dispatch'
+    | '/api/public/push/vapid-key'
   id:
     | '__root__'
     | '/'
@@ -225,6 +247,8 @@ export interface FileRouteTypes {
     | '/app/university'
     | '/admin/'
     | '/app/'
+    | '/api/public/push/dispatch'
+    | '/api/public/push/vapid-key'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -234,6 +258,8 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
   SignupRoute: typeof SignupRoute
+  ApiPublicPushDispatchRoute: typeof ApiPublicPushDispatchRoute
+  ApiPublicPushVapidKeyRoute: typeof ApiPublicPushVapidKeyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -357,6 +383,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAnalyticsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/api/public/push/vapid-key': {
+      id: '/api/public/push/vapid-key'
+      path: '/api/public/push/vapid-key'
+      fullPath: '/api/public/push/vapid-key'
+      preLoaderRoute: typeof ApiPublicPushVapidKeyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/push/dispatch': {
+      id: '/api/public/push/dispatch'
+      path: '/api/public/push/dispatch'
+      fullPath: '/api/public/push/dispatch'
+      preLoaderRoute: typeof ApiPublicPushDispatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -405,6 +445,8 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
   SignupRoute: SignupRoute,
+  ApiPublicPushDispatchRoute: ApiPublicPushDispatchRoute,
+  ApiPublicPushVapidKeyRoute: ApiPublicPushVapidKeyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
