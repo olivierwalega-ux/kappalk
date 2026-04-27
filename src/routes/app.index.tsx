@@ -210,3 +210,56 @@ function colorVar(c: string | null) {
     default: return "var(--pink)";
   }
 }
+
+function StreakRow({ streak }: { streak: number }) {
+  // Show last 7 days as visual indicators; filled = active, empty = missed
+  // Today is the rightmost dot. Past N-1 dots filled when streak >= position.
+  const days = 7;
+  const filled = Math.min(streak, days);
+  const todayActive = streak > 0;
+
+  return (
+    <div className="bg-surface-2 mx-4 mt-3 flex items-center gap-3 rounded-2xl border border-soft p-3">
+      <div className="flex items-center gap-1.5">
+        <Flame className={`h-4 w-4 ${todayActive ? "text-amber" : "text-text-3"}`} />
+        <span className="font-display text-[13px] font-bold">
+          {streak} <span className="text-text-2 font-normal">{streak === 1 ? "dzień" : "dni"}</span>
+        </span>
+      </div>
+      <div className="ml-auto flex items-center gap-1.5">
+        {Array.from({ length: days }).map((_, i) => {
+          // Rightmost = today (i = days - 1)
+          const isToday = i === days - 1;
+          const position = days - i; // 7, 6, ..., 1
+          const active = filled >= position;
+          if (isToday && active) {
+            return (
+              <div
+                key={i}
+                className="bg-gold flex h-7 w-7 items-center justify-center rounded-full shadow-[0_0_12px_rgba(245,200,66,0.5)]"
+                title="Dzisiaj"
+              >
+                <Check className="h-3.5 w-3.5 text-black" strokeWidth={3} />
+              </div>
+            );
+          }
+          if (active) {
+            return (
+              <div key={i} className="bg-primary flex h-6 w-6 items-center justify-center rounded-full">
+                <Check className="h-3 w-3 text-white" strokeWidth={3} />
+              </div>
+            );
+          }
+          return (
+            <div
+              key={i}
+              className={`flex h-6 w-6 items-center justify-center rounded-full border border-soft bg-surface-3 ${
+                isToday ? "ring-1 ring-text-3" : ""
+              }`}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
