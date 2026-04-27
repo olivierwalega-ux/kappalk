@@ -67,9 +67,12 @@ function HomePage() {
               {profile?.first_name ?? "Student"} ✨
             </div>
           </div>
-          <div className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1">
-            <Flame className="h-3.5 w-3.5 text-amber" />
-            <span className="font-display text-[13px] font-bold text-white">{profile?.streak_days ?? 0} dni</span>
+          <div className="flex items-center gap-2">
+            <NotificationBell />
+            <div className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1">
+              <Flame className="h-3.5 w-3.5 text-amber" />
+              <span className="font-display text-[13px] font-bold text-white">{profile?.streak_days ?? 0} dni</span>
+            </div>
           </div>
         </div>
 
