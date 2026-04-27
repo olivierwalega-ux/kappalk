@@ -58,15 +58,15 @@ function HomePage() {
       <StatusBar />
 
       {/* HERO */}
-      <Link to="/app/profile" className="bg-gradient-hero relative mx-4 mt-2 block overflow-hidden rounded-3xl border border-primary/30 px-5 py-5 active:opacity-90">
+      <div className="bg-gradient-hero relative mx-4 mt-2 overflow-hidden rounded-3xl border border-primary/30 px-5 py-5">
         <div className="pointer-events-none absolute -right-8 -top-8 h-44 w-44 rounded-full bg-[radial-gradient(closest-side,oklch(0.66_0.18_285/0.3),transparent)]" />
         <div className="relative flex items-start justify-between">
-          <div>
+          <Link to="/app/profile" className="min-w-0 flex-1 active:opacity-80">
             <div className="text-[13px] text-white/55">{greeting()},</div>
             <div className="font-display text-[20px] font-extrabold tracking-tight text-white">
               {profile?.first_name ?? "Student"} ✨
             </div>
-          </div>
+          </Link>
           <div className="flex items-center gap-2">
             <NotificationBell />
             <div className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1">
@@ -76,7 +76,7 @@ function HomePage() {
           </div>
         </div>
 
-        <div className="relative mt-4">
+        <Link to="/app/profile" className="relative mt-4 block active:opacity-80">
           <div className="text-[11px] uppercase tracking-wider text-white/45">Twoje punkty</div>
           <div className="font-display text-[40px] font-extrabold leading-none tracking-tight text-white">
             {formatPts(pts)} <span className="text-base font-medium text-white/50">pkt</span>
@@ -85,7 +85,7 @@ function HomePage() {
             <TrendingUp className="h-3 w-3 text-green" />
             <span className="text-xs text-green">Poziom {profile?.level ?? 1}</span>
           </div>
-        </div>
+        </Link>
 
         <div className="relative mt-4">
           <div className="mb-1.5 flex justify-between text-[11px] text-white/55">
@@ -96,7 +96,8 @@ function HomePage() {
             <div className="bg-gradient-gold h-full rounded-full" style={{ width: `${progress}%` }} />
           </div>
         </div>
-      </Link>
+      </div>
+
 
       {/* QUICK ACTIONS */}
       <div className="mx-4 mt-3 grid grid-cols-3 gap-2">
