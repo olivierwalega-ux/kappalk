@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { StudentNav } from "@/components/student-nav";
 import { PhoneShell } from "@/components/phone-shell";
+import { NotificationsProvider } from "@/lib/notifications";
+import { PushPermissionPrompt } from "@/components/push-permission-prompt";
 
 export const Route = createFileRoute("/app")({
   component: AppLayout,
@@ -27,11 +29,14 @@ function AppLayout() {
   }
 
   return (
-    <PhoneShell>
-      <main className="flex-1 pb-[88px]">
-        <Outlet />
-      </main>
-      <StudentNav />
-    </PhoneShell>
+    <NotificationsProvider>
+      <PhoneShell>
+        <main className="flex-1 pb-[88px]">
+          <Outlet />
+        </main>
+        <StudentNav />
+        <PushPermissionPrompt />
+      </PhoneShell>
+    </NotificationsProvider>
   );
 }
