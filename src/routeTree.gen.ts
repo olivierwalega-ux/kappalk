@@ -21,6 +21,7 @@ import { Route as AppUniversityRouteImport } from './routes/app.university'
 import { Route as AppTransferRouteImport } from './routes/app.transfer'
 import { Route as AppQrRouteImport } from './routes/app.qr'
 import { Route as AppProfileRouteImport } from './routes/app.profile'
+import { Route as AppNotificationsRouteImport } from './routes/app.notifications'
 import { Route as AppDiscoverRouteImport } from './routes/app.discover'
 import { Route as AdminStudentsRouteImport } from './routes/admin.students'
 import { Route as AdminEventsRouteImport } from './routes/admin.events'
@@ -86,6 +87,11 @@ const AppProfileRoute = AppProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AppRoute,
 } as any)
+const AppNotificationsRoute = AppNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDiscoverRoute = AppDiscoverRouteImport.update({
   id: '/discover',
   path: '/discover',
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/admin/events': typeof AdminEventsRoute
   '/admin/students': typeof AdminStudentsRoute
   '/app/discover': typeof AppDiscoverRoute
+  '/app/notifications': typeof AppNotificationsRoute
   '/app/profile': typeof AppProfileRoute
   '/app/qr': typeof AppQrRoute
   '/app/transfer': typeof AppTransferRoute
@@ -134,6 +141,7 @@ export interface FileRoutesByTo {
   '/admin/events': typeof AdminEventsRoute
   '/admin/students': typeof AdminStudentsRoute
   '/app/discover': typeof AppDiscoverRoute
+  '/app/notifications': typeof AppNotificationsRoute
   '/app/profile': typeof AppProfileRoute
   '/app/qr': typeof AppQrRoute
   '/app/transfer': typeof AppTransferRoute
@@ -153,6 +161,7 @@ export interface FileRoutesById {
   '/admin/events': typeof AdminEventsRoute
   '/admin/students': typeof AdminStudentsRoute
   '/app/discover': typeof AppDiscoverRoute
+  '/app/notifications': typeof AppNotificationsRoute
   '/app/profile': typeof AppProfileRoute
   '/app/qr': typeof AppQrRoute
   '/app/transfer': typeof AppTransferRoute
@@ -173,6 +182,7 @@ export interface FileRouteTypes {
     | '/admin/events'
     | '/admin/students'
     | '/app/discover'
+    | '/app/notifications'
     | '/app/profile'
     | '/app/qr'
     | '/app/transfer'
@@ -189,6 +199,7 @@ export interface FileRouteTypes {
     | '/admin/events'
     | '/admin/students'
     | '/app/discover'
+    | '/app/notifications'
     | '/app/profile'
     | '/app/qr'
     | '/app/transfer'
@@ -207,6 +218,7 @@ export interface FileRouteTypes {
     | '/admin/events'
     | '/admin/students'
     | '/app/discover'
+    | '/app/notifications'
     | '/app/profile'
     | '/app/qr'
     | '/app/transfer'
@@ -310,6 +322,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/notifications': {
+      id: '/app/notifications'
+      path: '/notifications'
+      fullPath: '/app/notifications'
+      preLoaderRoute: typeof AppNotificationsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/discover': {
       id: '/app/discover'
       path: '/discover'
@@ -359,6 +378,7 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface AppRouteChildren {
   AppDiscoverRoute: typeof AppDiscoverRoute
+  AppNotificationsRoute: typeof AppNotificationsRoute
   AppProfileRoute: typeof AppProfileRoute
   AppQrRoute: typeof AppQrRoute
   AppTransferRoute: typeof AppTransferRoute
@@ -368,6 +388,7 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppDiscoverRoute: AppDiscoverRoute,
+  AppNotificationsRoute: AppNotificationsRoute,
   AppProfileRoute: AppProfileRoute,
   AppQrRoute: AppQrRoute,
   AppTransferRoute: AppTransferRoute,

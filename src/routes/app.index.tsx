@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { StatusBar, SectionHeader } from "@/components/phone-shell";
 import { formatPts, greeting } from "@/lib/format";
 import { useMissions, getIcon, getColor } from "@/lib/missions";
+import { NotificationBell } from "@/components/notification-bell";
 
 export const Route = createFileRoute("/app/")({
   head: () => ({ meta: [{ title: "KAPP — Home" }] }),
