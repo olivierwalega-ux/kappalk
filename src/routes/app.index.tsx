@@ -159,19 +159,8 @@ function HomePage() {
       </div>
 
       {/* SERIA */}
-      <div className="bg-surface-2 mx-4 mt-3 flex items-center gap-3 rounded-2xl border border-soft p-3">
-        <span className="text-[12px] font-semibold text-text-2">Seria</span>
-        <div className="flex items-center gap-1.5">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="bg-primary flex h-6 w-6 items-center justify-center rounded-full">
-              <Check className="h-3 w-3 text-white" strokeWidth={3} />
-            </div>
-          ))}
-          <div className="bg-gold flex h-7 w-7 items-center justify-center rounded-full shadow-[0_0_12px_rgba(245,200,66,0.5)]">
-            <Check className="h-3.5 w-3.5 text-black" strokeWidth={3} />
-          </div>
-        </div>
-      </div>
+      <StreakRow streak={profile?.streak_days ?? 0} />
+
 
       {/* TODAY EVENTS */}
       <SectionHeader title="Dziś na kampusie" action={<Link to="/app/discover">Odkryj</Link>} />
