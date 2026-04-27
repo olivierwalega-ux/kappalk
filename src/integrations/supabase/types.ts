@@ -118,6 +118,7 @@ export type Database = {
           faculty: string | null
           first_name: string | null
           id: string
+          last_active_date: string | null
           last_name: string | null
           level: number
           points: number
@@ -134,6 +135,7 @@ export type Database = {
           faculty?: string | null
           first_name?: string | null
           id: string
+          last_active_date?: string | null
           last_name?: string | null
           level?: number
           points?: number
@@ -150,6 +152,7 @@ export type Database = {
           faculty?: string | null
           first_name?: string | null
           id?: string
+          last_active_date?: string | null
           last_name?: string | null
           level?: number
           points?: number
@@ -308,6 +311,7 @@ export type Database = {
         Args: { _delta?: number; _trigger_event: string; _user_id: string }
         Returns: undefined
       }
+      bump_streak: { Args: { _user_id: string }; Returns: undefined }
       claim_event: { Args: { _event_id: string }; Returns: Json }
       current_period_key: { Args: { _period: string }; Returns: string }
       has_role: {
@@ -317,6 +321,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      reset_inactive_streaks: { Args: never; Returns: undefined }
       transfer_points: {
         Args: { _amount: number; _note?: string; _to_user: string }
         Returns: Json
