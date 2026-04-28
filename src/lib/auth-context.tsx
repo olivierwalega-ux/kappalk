@@ -136,7 +136,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
     if (error) {
       if (error.message.includes("already registered") || error.message.toLowerCase().includes("user already")) {
-        return { error: "Ten email jest już zarejestrowany. Zaloguj się." };
+        return { error: "Ten email już jest u nas — wskakuj." };
       }
       return { error: error.message };
     }
