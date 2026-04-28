@@ -19,6 +19,7 @@ import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AppUniversityRouteImport } from './routes/app.university'
 import { Route as AppTransferRouteImport } from './routes/app.transfer'
+import { Route as AppRankingRouteImport } from './routes/app.ranking'
 import { Route as AppQrRouteImport } from './routes/app.qr'
 import { Route as AppProfileRouteImport } from './routes/app.profile'
 import { Route as AppNotificationsRouteImport } from './routes/app.notifications'
@@ -77,6 +78,11 @@ const AppUniversityRoute = AppUniversityRouteImport.update({
 const AppTransferRoute = AppTransferRouteImport.update({
   id: '/transfer',
   path: '/transfer',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRankingRoute = AppRankingRouteImport.update({
+  id: '/ranking',
+  path: '/ranking',
   getParentRoute: () => AppRoute,
 } as any)
 const AppQrRoute = AppQrRouteImport.update({
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/app/notifications': typeof AppNotificationsRoute
   '/app/profile': typeof AppProfileRoute
   '/app/qr': typeof AppQrRoute
+  '/app/ranking': typeof AppRankingRoute
   '/app/transfer': typeof AppTransferRoute
   '/app/university': typeof AppUniversityRoute
   '/admin/': typeof AdminIndexRoute
@@ -158,6 +165,7 @@ export interface FileRoutesByTo {
   '/app/notifications': typeof AppNotificationsRoute
   '/app/profile': typeof AppProfileRoute
   '/app/qr': typeof AppQrRoute
+  '/app/ranking': typeof AppRankingRoute
   '/app/transfer': typeof AppTransferRoute
   '/app/university': typeof AppUniversityRoute
   '/admin': typeof AdminIndexRoute
@@ -180,6 +188,7 @@ export interface FileRoutesById {
   '/app/notifications': typeof AppNotificationsRoute
   '/app/profile': typeof AppProfileRoute
   '/app/qr': typeof AppQrRoute
+  '/app/ranking': typeof AppRankingRoute
   '/app/transfer': typeof AppTransferRoute
   '/app/university': typeof AppUniversityRoute
   '/admin/': typeof AdminIndexRoute
@@ -203,6 +212,7 @@ export interface FileRouteTypes {
     | '/app/notifications'
     | '/app/profile'
     | '/app/qr'
+    | '/app/ranking'
     | '/app/transfer'
     | '/app/university'
     | '/admin/'
@@ -222,6 +232,7 @@ export interface FileRouteTypes {
     | '/app/notifications'
     | '/app/profile'
     | '/app/qr'
+    | '/app/ranking'
     | '/app/transfer'
     | '/app/university'
     | '/admin'
@@ -243,6 +254,7 @@ export interface FileRouteTypes {
     | '/app/notifications'
     | '/app/profile'
     | '/app/qr'
+    | '/app/ranking'
     | '/app/transfer'
     | '/app/university'
     | '/admin/'
@@ -334,6 +346,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTransferRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/ranking': {
+      id: '/app/ranking'
+      path: '/ranking'
+      fullPath: '/app/ranking'
+      preLoaderRoute: typeof AppRankingRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/qr': {
       id: '/app/qr'
       path: '/qr'
@@ -421,6 +440,7 @@ interface AppRouteChildren {
   AppNotificationsRoute: typeof AppNotificationsRoute
   AppProfileRoute: typeof AppProfileRoute
   AppQrRoute: typeof AppQrRoute
+  AppRankingRoute: typeof AppRankingRoute
   AppTransferRoute: typeof AppTransferRoute
   AppUniversityRoute: typeof AppUniversityRoute
   AppIndexRoute: typeof AppIndexRoute
@@ -431,6 +451,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppNotificationsRoute: AppNotificationsRoute,
   AppProfileRoute: AppProfileRoute,
   AppQrRoute: AppQrRoute,
+  AppRankingRoute: AppRankingRoute,
   AppTransferRoute: AppTransferRoute,
   AppUniversityRoute: AppUniversityRoute,
   AppIndexRoute: AppIndexRoute,
@@ -451,3 +472,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

@@ -113,11 +113,11 @@ function HomePage() {
           </div>
           <span className="text-xs font-medium">Wyślij</span>
         </Link>
-        <Link to="/app/discover" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3.5 active:opacity-70">
+        <Link to="/app/ranking" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3.5 active:opacity-70">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gold/20">
-            <Users className="h-5 w-5 text-gold" />
+            <Trophy className="h-5 w-5 text-gold" />
           </div>
-          <span className="text-xs font-medium">Społeczność</span>
+          <span className="text-xs font-medium">Ranking</span>
         </Link>
       </div>
 
