@@ -74,7 +74,7 @@ function AdminStudents() {
           <AlertCircle className="h-5 w-5 text-pink" />
           <div>
             <div className="text-sm font-semibold">{inactive} studentów zagrożonych</div>
-            <div className="text-[11px] text-text-2">Saldo poniżej 200 pkt</div>
+            <div className="text-[11px] text-text-2">Saldo poniżej 200 🍌</div>
           </div>
         </div>
       )}

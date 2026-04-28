@@ -165,7 +165,7 @@ function AdminEvents() {
               <input
                 type="number"
                 min="0"
-                placeholder="Punkty"
+                placeholder="Banany 🍌"
                 value={form.points}
                 onChange={(e) => setForm({ ...form, points: e.target.value })}
                 className="w-full rounded-xl border border-input bg-surface-2 px-4 py-3 text-sm outline-none focus:border-primary"
@@ -233,7 +233,7 @@ function QrModal({ event, onClose }: { event: Ev; onClose: () => void }) {
           <h1>${event.title}</h1>
           <p>${event.location ?? ""}</p>
           <img src="${dataUrl}" />
-          <div class="pts">+${event.points} punktów</div>
+          <div class="pts">+${event.points} 🍌</div>
           <script>window.onload = () => window.print();</script>
         </body>
       </html>
@@ -260,7 +260,7 @@ function QrModal({ event, onClose }: { event: Ev; onClose: () => void }) {
         <div className="text-center space-y-1">
           <div className="font-display font-bold">{event.title}</div>
           {event.location && <div className="text-xs text-text-2">{event.location}</div>}
-          <div className="text-xs font-bold text-brand-glow">+{event.points} pkt</div>
+          <div className="text-xs font-bold text-brand-glow">+{event.points} 🍌</div>
         </div>
 
         <div ref={canvasRef} className="flex justify-center rounded-2xl bg-white p-5">

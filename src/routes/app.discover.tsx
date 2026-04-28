@@ -51,7 +51,7 @@ function DiscoverPage() {
     const { data, error } = await supabase.rpc("claim_event", { _event_id: id });
     if (error) { toast.error(error.message); return; }
     const result = data as { points?: number } | null;
-    toast.success(`+${result?.points ?? 0} punktów! 🎉`);
+    toast.success(`+${result?.points ?? 0} 🍌! 🎉`);
     await refreshProfile();
     load();
   };
@@ -132,7 +132,7 @@ function EventsTab({ events, loading, claimed, onClaim }: { events: Ev[]; loadin
                     onClick={() => onClaim(e.id)}
                     className="rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground active:scale-95 disabled:opacity-40"
                   >
-                    {isClaimed ? "Odebrano ✓" : e.points === 0 ? "Partner" : `+${e.points} pkt`}
+                    {isClaimed ? "Zgarnięte ✓" : e.points === 0 ? "Partner" : `Zgarnij +${e.points} 🍌`}
                   </button>
                 </div>
               </div>
@@ -176,7 +176,7 @@ function ChallengesTab() {
                   className="font-display text-sm font-semibold"
                   style={{ color: c.completed ? "var(--green)" : "var(--brand-glow)" }}
                 >
-                  +{c.bonus_points} pkt
+                  +{c.bonus_points} 🍌
                 </div>
               </div>
               <div className="px-4 py-3">
@@ -204,8 +204,8 @@ function ChallengesTab() {
 
 function GroupsTab() {
   const groups = [
-    { icon: BookOpen, color: "var(--brand-glow)", bg: "rgba(123,110,246,.12)", name: "Koło IT i Technologii", meta: "234 członków · Ty: 380 pkt", joined: true },
-    { icon: Briefcase, color: "var(--gold)", bg: "rgba(245,200,66,.1)", name: "Koło Finansów i Inwestycji", meta: "187 członków · Ty: 120 pkt", joined: true },
+    { icon: BookOpen, color: "var(--brand-glow)", bg: "rgba(123,110,246,.12)", name: "Koło IT i Technologii", meta: "234 członków · Ty: 380 🍌", joined: true },
+    { icon: Briefcase, color: "var(--gold)", bg: "rgba(245,200,66,.1)", name: "Koło Finansów i Inwestycji", meta: "187 członków · Ty: 120 🍌", joined: true },
     { icon: Trophy, color: "var(--teal)", bg: "rgba(62,198,198,.1)", name: "Koło Przedsiębiorczości", meta: "312 członków", joined: false },
     { icon: Heart, color: "var(--pink)", bg: "rgba(232,96,122,.1)", name: "Wolontariat ALK", meta: "98 członków", joined: false },
     { icon: Activity, color: "var(--green)", bg: "rgba(62,200,122,.1)", name: "Sport i Zdrowy Styl Życia", meta: "156 członków", joined: false },
@@ -238,9 +238,9 @@ function GroupsTab() {
 function BoardTab() {
   const [filter, setFilter] = useState<"all" | "tutor" | "project" | "sale">("all");
   const posts = [
-    { type: "tutor" as const, icon: BookOpen, color: "var(--brand-glow)", bg: "rgba(123,110,246,.15)", title: "Korepetycje z Analizy Finansowej", desc: "Rok 2 i 3. 60 zł/h lub 150 pkt KAPP. Kontakt: Mateusz K.", tag: "Korepetycje", time: "2 godz. temu" },
+    { type: "tutor" as const, icon: BookOpen, color: "var(--brand-glow)", bg: "rgba(123,110,246,.15)", title: "Korepetycje z Analizy Finansowej", desc: "Rok 2 i 3. 60 zł/h lub 150 🍌 KAPP. Kontakt: Mateusz K.", tag: "Korepetycje", time: "2 godz. temu" },
     { type: "project" as const, icon: Users, color: "var(--teal)", bg: "rgba(62,198,198,.12)", title: "Szukam grupy na projekt z Marketingu", desc: "Termin: 15 maja. Mam już 2 osoby, potrzebuję 1–2 więcej.", tag: "Projekt", time: "5 godz. temu" },
-    { type: "sale" as const, icon: ShoppingCart, color: "var(--gold)", bg: "rgba(245,200,66,.12)", title: "Sprzedam podręczniki do Prawa Europejskiego", desc: "Stan b. dobry, 2 książki. 80 zł lub 200 pkt KAPP.", tag: "Sprzedaż", time: "wczoraj" },
+    { type: "sale" as const, icon: ShoppingCart, color: "var(--gold)", bg: "rgba(245,200,66,.12)", title: "Sprzedam podręczniki do Prawa Europejskiego", desc: "Stan b. dobry, 2 książki. 80 zł lub 200 🍌 KAPP.", tag: "Sprzedaż", time: "wczoraj" },
   ];
   const filtered = filter === "all" ? posts : posts.filter((p) => p.type === filter);
   return (
