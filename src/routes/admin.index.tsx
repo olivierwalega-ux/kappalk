@@ -45,7 +45,7 @@ function AdminDash() {
         <div className="grid grid-cols-3 gap-2">
           <Kpi v={counts.students} k="Studenci" />
           <Kpi v={counts.events} k="Aktywne eventy" />
-          <Kpi v={counts.points} k="Punkty wydane" />
+          <Kpi v={counts.points} k="Banany 🍌 wydane" />
         </div>
       </div>
 

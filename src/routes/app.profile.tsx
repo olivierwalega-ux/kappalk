@@ -46,7 +46,7 @@ function ProfilePage() {
 
       {/* Stats */}
       <div className="mx-4 grid grid-cols-3 gap-px overflow-hidden rounded-2xl bg-border">
-        <Stat label="Punkty" value={formatPts(profile?.points ?? 0)} accent />
+        <Stat label="Banany 🍌" value={formatPts(profile?.points ?? 0)} accent />
         <Stat label="Poziom" value={String(profile?.level ?? 1)} />
         <Stat label="Streak" value={String(profile?.streak_days ?? 0)} />
       </div>
@@ -61,7 +61,7 @@ function ProfilePage() {
           <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[radial-gradient(closest-side,oklch(0.66_0.18_285/0.3),transparent)]" />
           <div className="font-display relative text-base font-extrabold text-white/90">KAPP</div>
           <div className="font-display relative mt-3 text-[34px] font-extrabold leading-none tracking-tight text-white">
-            {formatPts(profile?.points ?? 0)} <span className="text-sm font-normal text-white/50">pkt</span>
+            {formatPts(profile?.points ?? 0)} <span className="text-sm font-normal text-white/50">🍌</span>
           </div>
           <div className="relative mt-2 text-[13px] text-white/60">
             {profile?.first_name} {profile?.last_name}
@@ -74,7 +74,7 @@ function ProfilePage() {
       <div className="mx-4 mt-3 grid grid-cols-2 gap-2">
         <Link to="/app/transfer" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3.5 active:opacity-80">
           <Send className="h-5 w-5 text-brand-glow" />
-          <span className="text-[11px] font-medium text-text-2">Wyślij punkty</span>
+          <span className="text-[11px] font-medium text-text-2">Prześlij 🍌</span>
         </Link>
         <Link to="/app/qr" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3.5 active:opacity-80">
           <QrCode className="h-5 w-5 text-teal" />
@@ -86,8 +86,8 @@ function ProfilePage() {
       <SectionHeader title="Zaproś znajomego" />
       <div className="bg-surface-2 mx-4 rounded-2xl border border-soft p-4">
         <div className="text-[13px] text-text-2">
-          Ty dostaniesz <span className="font-semibold text-brand-glow">+50 pkt</span>, a znajomy{" "}
-          <span className="font-semibold text-brand-glow">+100 pkt</span>.
+          Ty łapiesz <span className="font-semibold text-brand-glow">+50 🍌</span>, a ziomek{" "}
+          <span className="font-semibold text-brand-glow">+100 🍌</span>.
         </div>
         <div className="bg-surface-3 mt-3 flex items-center justify-between rounded-xl px-4 py-3">
           <div className="font-display text-base font-bold tracking-wider text-brand-glow">

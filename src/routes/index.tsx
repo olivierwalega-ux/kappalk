@@ -6,7 +6,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "KAPP — Akademia Leona Koźmińskiego" },
-      { name: "description", content: "Twój kampus, ożywiony. Punkty, eventy, społeczność ALK." },
+      { name: "description", content: "Twój kampus, ożywiony. Banany 🍌, eventy, społeczność ALK." },
     ],
   }),
   component: SplashPage,
@@ -47,7 +47,7 @@ function SplashPage() {
           </div>
           <div className="font-display text-[44px] font-extrabold tracking-tight text-white">KAPP</div>
           <div className="max-w-[260px] text-center text-sm leading-relaxed text-white/40">
-            Twój kampus. Twoje punkty.
+            Twój kampus. Twoje banany 🍌.
             <br />
             Twoja społeczność.
           </div>

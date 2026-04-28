@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Flame, TrendingUp, QrCode, Send, Trophy, Check, Users } from "lucide-react";
+import { Flame, TrendingUp, QrCode, Send, Trophy, Check, Users, Gift } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/integrations/supabase/client";
 import { StatusBar, SectionHeader } from "@/components/phone-shell";
@@ -77,9 +77,9 @@ function HomePage() {
         </div>
 
         <Link to="/app/profile" className="relative mt-4 block active:opacity-80">
-          <div className="text-[11px] uppercase tracking-wider text-white/45">Twoje punkty</div>
+          <div className="text-[11px] uppercase tracking-wider text-white/45">Twoje banany 🍌</div>
           <div className="font-display text-[40px] font-extrabold leading-none tracking-tight text-white">
-            {formatPts(pts)} <span className="text-base font-medium text-white/50">pkt</span>
+            {formatPts(pts)} <span className="text-base font-medium text-white/50">🍌</span>
           </div>
           <div className="mt-1.5 flex items-center gap-1.5">
             <TrendingUp className="h-3 w-3 text-green" />
@@ -100,24 +100,30 @@ function HomePage() {
 
 
       {/* QUICK ACTIONS */}
-      <div className="mx-4 mt-3 grid grid-cols-3 gap-2">
-        <Link to="/app/qr" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3.5 active:opacity-70">
+      <div className="mx-4 mt-3 grid grid-cols-4 gap-2">
+        <Link to="/app/qr" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3 active:opacity-70">
           <div className="bg-gradient-brand flex h-11 w-11 items-center justify-center rounded-2xl shadow-glow">
             <QrCode className="h-5 w-5 text-white" />
           </div>
-          <span className="text-xs font-medium">Skanuj QR</span>
+          <span className="text-[11px] font-medium">Skanuj QR</span>
         </Link>
-        <Link to="/app/transfer" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3.5 active:opacity-70">
+        <Link to="/app/transfer" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3 active:opacity-70">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-teal/20">
             <Send className="h-5 w-5 text-teal" />
           </div>
-          <span className="text-xs font-medium">Wyślij</span>
+          <span className="text-[11px] font-medium">Prześlij 🍌</span>
         </Link>
-        <Link to="/app/ranking" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3.5 active:opacity-70">
+        <Link to="/app/rewards" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3 active:opacity-70">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-pink/20">
+            <Gift className="h-5 w-5 text-pink" />
+          </div>
+          <span className="text-[11px] font-medium">Nagrody</span>
+        </Link>
+        <Link to="/app/ranking" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3 active:opacity-70">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gold/20">
             <Trophy className="h-5 w-5 text-gold" />
           </div>
-          <span className="text-xs font-medium">Ranking</span>
+          <span className="text-[11px] font-medium">Ranking</span>
         </Link>
       </div>
 
@@ -186,7 +192,7 @@ function HomePage() {
       {/* ACTIVITY */}
       <SectionHeader title="Ostatnia aktywność" action={<Link to="/app/profile">Wszystkie</Link>} />
       <div className="bg-surface-2 mx-4 overflow-hidden rounded-2xl border border-soft">
-        {tx.length === 0 && <div className="p-4 text-sm text-text-2">Brak transakcji. Odbierz pierwsze punkty z eventu!</div>}
+        {tx.length === 0 && <div className="p-4 text-sm text-text-2">Pusto. Zgarnij pierwsze banany 🍌 z eventu!</div>}
         {tx.map((t) => (
           <div key={t.id} className="flex items-center gap-3 border-b border-soft px-4 py-3 last:border-b-0">
             <div className="min-w-0 flex-1">

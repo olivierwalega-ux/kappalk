@@ -9,7 +9,7 @@ import { StatusBar, PageHeader } from "@/components/phone-shell";
 import { formatPts } from "@/lib/format";
 
 export const Route = createFileRoute("/app/transfer")({
-  head: () => ({ meta: [{ title: "Wyślij punkty — KAPP" }] }),
+  head: () => ({ meta: [{ title: "Prześlij banany 🍌 — KAPP" }] }),
   component: TransferPage,
 });
 
@@ -44,7 +44,7 @@ const buildTransferSchema = (balance: number) =>
       .number({ message: "Wpisz kwotę" })
       .int("Kwota musi być liczbą całkowitą")
       .positive("Kwota musi być większa od zera")
-      .max(balance, `Niewystarczające saldo (masz ${balance} pkt)`),
+      .max(balance, `Brakuje 🍌 (masz ${balance} 🍌)`),
     note: z.string().trim().max(120, "Notatka max 120 znaków").optional(),
     recipientId: z.string().uuid("Wybierz odbiorcę"),
   });
@@ -95,7 +95,7 @@ function TransferPage() {
       return;
     }
     if (parsed.data === profile?.email?.toLowerCase()) {
-      toast.error("Nie możesz wysłać punktów do siebie");
+      toast.error("Nie możesz przesłać 🍌 do siebie");
       return;
     }
     setLookupLoading(true);
@@ -153,7 +153,7 @@ function TransferPage() {
     }
 
     if (picked.id === user?.id) {
-      toast.error("Nie możesz wysłać punktów do siebie");
+      toast.error("Nie możesz przesłać 🍌 do siebie");
       return;
     }
 
@@ -169,7 +169,7 @@ function TransferPage() {
       toast.error(error.message || "Transfer nie powiódł się");
       return;
     }
-    toast.success(`Wysłano ${parsed.data.amount} pkt do ${picked.first_name ?? picked.email}!`);
+    toast.success(`Poszło ${parsed.data.amount} 🍌 do ${picked.first_name ?? picked.email}!`);
     await refreshProfile();
     navigate({ to: "/app" });
   };
@@ -179,7 +179,7 @@ function TransferPage() {
     return (
       <div className="animate-fade-in">
         <StatusBar />
-        <PageHeader title="Wybierz odbiorcę" subtitle="Wyślij punkty znajomemu" />
+        <PageHeader title="Wybierz odbiorcę" subtitle="Prześlij 🍌 ziomkowi" />
 
         <div className="bg-surface-2 mx-4 flex items-center gap-2 rounded-xl border border-input px-3 py-2.5">
           <Search className="h-4 w-4 text-text-2" />
@@ -247,7 +247,7 @@ function TransferPage() {
   return (
     <div className="animate-fade-in">
       <StatusBar />
-      <PageHeader title="Wyślij punkty" subtitle="Transfer peer-to-peer" />
+      <PageHeader title="Prześlij banany 🍌" subtitle="Transfer peer-to-peer" />
 
       <button
         onClick={() => setPicked(null)}
@@ -269,11 +269,11 @@ function TransferPage() {
         <div className="text-[11px] uppercase tracking-wider text-text-3">Kwota</div>
         <div className="font-display flex items-baseline gap-2 text-[44px] font-extrabold leading-none tracking-tight">
           <span className={insufficient ? "text-pink" : ""}>{formatPts(n)}</span>
-          <span className="text-base font-normal text-text-2">pkt</span>
+          <span className="text-base font-normal text-text-2">🍌</span>
         </div>
         <div className="mt-2 text-[12px] text-text-2">
-          Dostępne: <span className={`font-bold ${insufficient ? "text-pink" : "text-text-1"}`}>
-            {formatPts(balance)} pkt
+          Masz: <span className={`font-bold ${insufficient ? "text-pink" : "text-text-1"}`}>
+            {formatPts(balance)} 🍌
           </span>
         </div>
       </div>
@@ -304,7 +304,7 @@ function TransferPage() {
         disabled={sending || n <= 0 || insufficient}
         className="bg-gradient-brand shadow-glow font-display mx-4 mt-4 w-[calc(100%-2rem)] rounded-2xl py-4 text-base font-bold text-white active:scale-[0.98] disabled:opacity-40"
       >
-        {sending ? "Wysyłanie…" : insufficient ? "Niewystarczające saldo" : `Wyślij ${formatPts(n)} pkt`}
+        {sending ? "Lecimy…" : insufficient ? "Brakuje 🍌" : `Prześlij ${formatPts(n)} 🍌`}
       </button>
       <div className="h-6" />
     </div>

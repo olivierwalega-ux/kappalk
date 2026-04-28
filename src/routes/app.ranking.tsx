@@ -127,7 +127,7 @@ function RankingPage() {
           {/* Sticky "you" card if outside top 100 */}
           {!myRank && profile && (
             <div className="bg-surface-2 mx-4 mt-4 rounded-2xl border border-primary/30 p-3 text-center text-xs text-text-2">
-              Twoja pozycja jest poza top {PAGE_SIZE}. Zdobywaj punkty, by się tu znaleźć!
+              Twoja pozycja jest poza top {PAGE_SIZE}. Zbieraj banany 🍌, by się tu znaleźć!
             </div>
           )}
         </>
@@ -193,7 +193,7 @@ function PodiumCol({
         <Avatar row={row} ring={isMe} size={place === 1 ? 56 : 48} />
       </div>
       <div className="w-full truncate text-center text-[11px] font-medium text-text-1">{nameOf(row)}</div>
-      <div className="font-display text-[13px] font-bold text-text-1">{formatPts(row.points)} pkt</div>
+      <div className="font-display text-[13px] font-bold text-text-1">{formatPts(row.points)} 🍌</div>
       <div
         className={`flex w-full items-center justify-center rounded-t-xl border border-soft ${
           isMe ? "ring-2 ring-primary/60" : ""
@@ -275,7 +275,7 @@ function PointsPill({ points, highlight }: { points: number; highlight?: boolean
     >
       {highlight && <Flame className="h-3 w-3" />}
       <span className="font-display text-[12px] font-bold">{formatPts(points)}</span>
-      <span className="text-[10px] opacity-70">pkt</span>
+      <span className="text-[10px] opacity-70">🍌</span>
     </div>
   );
 }

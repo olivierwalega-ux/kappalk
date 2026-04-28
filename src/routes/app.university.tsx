@@ -214,7 +214,7 @@ function CalTab() {
       <div className="bg-surface-2 mx-4 overflow-hidden rounded-2xl border border-soft">
         {[
           { name: "Zarządzanie Strategiczne", meta: "Pn 21 kwi · 8:00 · Sala 304", tag: "Zajęcia", color: "var(--brand-glow)" },
-          { name: "Konferencja IT 2025", meta: "Nd 20 kwi · Aula A · +100 pkt", tag: "Event", color: "var(--pink)" },
+          { name: "Konferencja IT 2025", meta: "Nd 20 kwi · Aula A · +100 🍌", tag: "Event", color: "var(--pink)" },
           { name: "Spotkanie Koła IT", meta: "Wt 22 kwi · 16:00 · Sala 105", tag: "Koło", color: "var(--teal)" },
           { name: "Targi Pracy ALK", meta: "Pt 28 kwi · 10:00", tag: "Event", color: "var(--gold)" },
         ].map((u) => (

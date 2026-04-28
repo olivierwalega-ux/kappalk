@@ -22,15 +22,15 @@ const slides = [
     icon: Trophy,
     accent: "oklch(0.85 0.16 90)",
     bg: "rgba(245,200,66,.08)",
-    title: "Punkty za każdą aktywność",
-    body: "Skanuj QR, bądź aktywny i wymieniaj punkty na nagrody od partnerów uczelni.",
+    title: "Banany 🍌 za każdą aktywność",
+    body: "Skanuj QR, bądź aktywny i wymieniaj banany na nagrody od partnerów uczelni.",
   },
   {
     icon: Users,
     accent: "oklch(0.78 0.13 195)",
     bg: "rgba(62,198,198,.08)",
     title: "Połącz się ze społecznością",
-    body: "Wysyłaj punkty, rywalizuj w rankingu i odkrywaj koła zainteresowań.",
+    body: "Przesyłaj banany 🍌 ziomkom, walcz w rankingu i odkrywaj koła zainteresowań.",
   },
 ];
 
@@ -79,7 +79,7 @@ function Onboarding() {
           onClick={next}
           className="bg-gradient-brand shadow-glow w-full rounded-2xl py-5 font-display text-base font-bold text-white active:scale-[0.97]"
         >
-          {step < total - 1 ? "Dalej" : "Zacznij"}
+          {step < total - 1 ? "Dalej" : "Wskakuj do KAPP"}
         </button>
         {step < total - 1 && (
           <button onClick={finish} className="py-3 text-[13px] text-text-3">

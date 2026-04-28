@@ -43,7 +43,7 @@ function QrPage() {
       setBusy(false);
 
       if (error) {
-        toast.error(error.message || "Nie udało się odebrać punktów");
+        toast.error(error.message || "Nie udało się zgarnąć 🍌");
         // re-arm after a moment so user can try a different code
         setTimeout(() => {
           // QrScanner internally guards single-fire; we re-render to reset
@@ -62,7 +62,7 @@ function QrPage() {
   return (
     <div className="animate-fade-in">
       <StatusBar />
-      <PageHeader title="Skaner QR" subtitle="Zeskanuj kod by zdobyć punkty" />
+      <PageHeader title="Skaner QR" subtitle="Zeskanuj kod i zgarnij banany 🍌" />
 
       <div className="flex flex-col items-center px-6 pt-2">
         <div className="bg-surface-2 relative h-64 w-64 overflow-hidden rounded-3xl border-2 border-primary/30">
@@ -140,7 +140,7 @@ function QrPage() {
           </div>
           <div className="text-[12px] text-text-2">{profile?.student_id} · Koźmiński</div>
           <div className="font-display mt-1 text-lg font-bold text-brand-glow">
-            {formatPts(profile?.points ?? 0)} pkt
+            {formatPts(profile?.points ?? 0)} 🍌
           </div>
         </div>
       </div>
@@ -149,7 +149,7 @@ function QrPage() {
         to="/app/transfer"
         className="bg-surface-2 font-display mx-4 mt-3 flex w-[calc(100%-2rem)] items-center justify-center gap-2 rounded-2xl border border-soft py-3.5 text-sm font-bold active:scale-[0.98]"
       >
-        <Send className="h-4 w-4 text-teal" /> Wyślij punkty znajomemu
+        <Send className="h-4 w-4 text-teal" /> Prześlij banany 🍌 ziomkowi
       </Link>
 
       <SectionHeader title="Apple Wallet" />
@@ -176,7 +176,7 @@ function QrPage() {
               <div className="font-display mt-4 text-xl font-extrabold">Brawo!</div>
               <div className="mt-1 text-sm text-text-2">{success.title}</div>
               <div className="font-display mt-3 text-[42px] font-extrabold leading-none text-brand-glow">
-                +{success.points} <span className="text-base font-normal text-text-2">pkt</span>
+                +{success.points} <span className="text-base font-normal text-text-2">🍌</span>
               </div>
               <button
                 onClick={() => setSuccess(null)}
