@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/lib/auth-context";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "Zaloguj się — KAPP" }] }),
+  head: () => ({ meta: [{ title: "Wskakuj do KAPP" }] }),
   component: LoginPage,
 });
 
@@ -39,8 +39,8 @@ function LoginPage() {
           <div className="bg-gradient-brand shadow-glow flex h-16 w-16 items-center justify-center rounded-[20px] font-display text-2xl font-extrabold text-white">
             K
           </div>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight text-text-1">Witaj w KAPP</h1>
-          <p className="text-center text-sm text-text-2">Zaloguj się emailem ALK</p>
+          <h1 className="font-display text-3xl font-extrabold tracking-tight text-text-1">Cześć, ziomek 👋</h1>
+          <p className="text-center text-sm text-text-2">Zaloguj się mailem ALK i zgarniaj banany 🍌</p>
         </div>
 
         <form onSubmit={onSubmit} className="flex flex-col gap-3.5">
@@ -74,7 +74,7 @@ function LoginPage() {
             disabled={submitting}
             className="bg-gradient-brand shadow-glow mt-1 w-full rounded-2xl py-4 font-display text-base font-bold text-white active:scale-[0.98] disabled:opacity-60"
           >
-            {submitting ? "Logowanie…" : "Zaloguj się"}
+            {submitting ? "Logowanie…" : "Wskakuj do KAPP"}
           </button>
         </form>
 
