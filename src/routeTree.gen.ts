@@ -19,6 +19,7 @@ import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AppUniversityRouteImport } from './routes/app.university'
 import { Route as AppTransferRouteImport } from './routes/app.transfer'
+import { Route as AppRewardsRouteImport } from './routes/app.rewards'
 import { Route as AppRankingRouteImport } from './routes/app.ranking'
 import { Route as AppQrRouteImport } from './routes/app.qr'
 import { Route as AppProfileRouteImport } from './routes/app.profile'
@@ -78,6 +79,11 @@ const AppUniversityRoute = AppUniversityRouteImport.update({
 const AppTransferRoute = AppTransferRouteImport.update({
   id: '/transfer',
   path: '/transfer',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRewardsRoute = AppRewardsRouteImport.update({
+  id: '/rewards',
+  path: '/rewards',
   getParentRoute: () => AppRoute,
 } as any)
 const AppRankingRoute = AppRankingRouteImport.update({
@@ -146,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/app/profile': typeof AppProfileRoute
   '/app/qr': typeof AppQrRoute
   '/app/ranking': typeof AppRankingRoute
+  '/app/rewards': typeof AppRewardsRoute
   '/app/transfer': typeof AppTransferRoute
   '/app/university': typeof AppUniversityRoute
   '/admin/': typeof AdminIndexRoute
@@ -166,6 +173,7 @@ export interface FileRoutesByTo {
   '/app/profile': typeof AppProfileRoute
   '/app/qr': typeof AppQrRoute
   '/app/ranking': typeof AppRankingRoute
+  '/app/rewards': typeof AppRewardsRoute
   '/app/transfer': typeof AppTransferRoute
   '/app/university': typeof AppUniversityRoute
   '/admin': typeof AdminIndexRoute
@@ -189,6 +197,7 @@ export interface FileRoutesById {
   '/app/profile': typeof AppProfileRoute
   '/app/qr': typeof AppQrRoute
   '/app/ranking': typeof AppRankingRoute
+  '/app/rewards': typeof AppRewardsRoute
   '/app/transfer': typeof AppTransferRoute
   '/app/university': typeof AppUniversityRoute
   '/admin/': typeof AdminIndexRoute
@@ -213,6 +222,7 @@ export interface FileRouteTypes {
     | '/app/profile'
     | '/app/qr'
     | '/app/ranking'
+    | '/app/rewards'
     | '/app/transfer'
     | '/app/university'
     | '/admin/'
@@ -233,6 +243,7 @@ export interface FileRouteTypes {
     | '/app/profile'
     | '/app/qr'
     | '/app/ranking'
+    | '/app/rewards'
     | '/app/transfer'
     | '/app/university'
     | '/admin'
@@ -255,6 +266,7 @@ export interface FileRouteTypes {
     | '/app/profile'
     | '/app/qr'
     | '/app/ranking'
+    | '/app/rewards'
     | '/app/transfer'
     | '/app/university'
     | '/admin/'
@@ -344,6 +356,13 @@ declare module '@tanstack/react-router' {
       path: '/transfer'
       fullPath: '/app/transfer'
       preLoaderRoute: typeof AppTransferRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/rewards': {
+      id: '/app/rewards'
+      path: '/rewards'
+      fullPath: '/app/rewards'
+      preLoaderRoute: typeof AppRewardsRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/ranking': {
@@ -441,6 +460,7 @@ interface AppRouteChildren {
   AppProfileRoute: typeof AppProfileRoute
   AppQrRoute: typeof AppQrRoute
   AppRankingRoute: typeof AppRankingRoute
+  AppRewardsRoute: typeof AppRewardsRoute
   AppTransferRoute: typeof AppTransferRoute
   AppUniversityRoute: typeof AppUniversityRoute
   AppIndexRoute: typeof AppIndexRoute
@@ -452,6 +472,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppProfileRoute: AppProfileRoute,
   AppQrRoute: AppQrRoute,
   AppRankingRoute: AppRankingRoute,
+  AppRewardsRoute: AppRewardsRoute,
   AppTransferRoute: AppTransferRoute,
   AppUniversityRoute: AppUniversityRoute,
   AppIndexRoute: AppIndexRoute,
