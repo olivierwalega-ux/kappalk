@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { LogOut, Settings, ShieldCheck, Send, QrCode, Copy, Bell, CreditCard, Lock, Star, Clock, Users, Activity, Zap } from "lucide-react";
+import { LogOut, Settings, ShieldCheck, Send, QrCode, Copy, Bell, CreditCard, Lock, Star, Clock, Users, Activity, Zap, Trophy, Megaphone } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/lib/auth-context";
 import { StatusBar, SectionHeader } from "@/components/phone-shell";
