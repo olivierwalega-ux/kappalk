@@ -105,7 +105,7 @@ function HomePage() {
         className="bg-gradient-brand shadow-glow font-display mx-4 mt-3 flex items-center justify-center gap-3 rounded-2xl py-4 text-[15px] font-extrabold text-white active:scale-[0.98]"
       >
         <QrCode className="h-5 w-5" />
-        Skanuj QR i zdobywaj banany 🍌
+        Skanuj QR i zdobywaj banany
       </Link>
 
       {/* QUICK ACTIONS */}
