@@ -39,7 +39,7 @@ function SignupPage() {
             K
           </div>
           <h1 className="font-display text-[26px] font-extrabold tracking-tight text-text-1">Załóż konto KAPP</h1>
-          <p className="text-center text-sm text-text-2">100 🍌 powitalnych na start 🎁</p>
+          <p className="text-center text-sm text-text-3">100 🍌 powitalnych na start.</p>
         </div>
 
         <form onSubmit={onSubmit} className="flex flex-col gap-3">
@@ -82,7 +82,7 @@ function SignupPage() {
             disabled={submitting}
             className="bg-gradient-brand shadow-glow mt-1 w-full rounded-2xl py-4 font-display text-base font-bold text-white active:scale-[0.98] disabled:opacity-60"
           >
-            {submitting ? "Zakładamy konto…" : "Wskakuj do KAPP"}
+            {submitting ? "Zakładamy konto…" : "Załóż konto"}
           </button>
         </form>
 
@@ -91,7 +91,7 @@ function SignupPage() {
         </p>
 
         <Link to="/login" className="text-center text-sm text-brand-glow">
-          Mam już konto — wskakuj
+          Mam już konto — zaloguj się
         </Link>
       </div>
     </div>
