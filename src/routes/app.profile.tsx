@@ -74,7 +74,7 @@ function ProfilePage() {
       <div className="mx-4 mt-3 grid grid-cols-2 gap-2">
         <Link to="/app/transfer" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3.5 active:opacity-80">
           <Send className="h-5 w-5 text-brand-glow" />
-          <span className="text-[11px] font-medium text-text-2">Prześlij 🍌</span>
+          <span className="text-[11px] font-medium text-text-2">Wyślij banany</span>
         </Link>
         <Link to="/app/qr" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3.5 active:opacity-80">
           <QrCode className="h-5 w-5 text-teal" />
@@ -109,7 +109,7 @@ function ProfilePage() {
       <SectionHeader title="Zaproś znajomego" />
       <div className="bg-surface-2 mx-4 rounded-2xl border border-soft p-4">
         <div className="text-[13px] text-text-2">
-          Ty łapiesz <span className="font-semibold text-brand-glow">+50 🍌</span>, a ziomek{" "}
+          Ty dostajesz <span className="font-semibold text-brand-glow">+50 🍌</span>, znajomy{" "}
           <span className="font-semibold text-brand-glow">+100 🍌</span>.
         </div>
         <div className="bg-surface-3 mt-3 flex items-center justify-between rounded-xl px-4 py-3">

@@ -114,7 +114,7 @@ function HomePage() {
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-teal/20">
             <Send className="h-5 w-5 text-teal" />
           </div>
-          <span className="text-[11px] font-medium">Prześlij 🍌</span>
+          <span className="text-[11px] font-medium">Wyślij banany</span>
         </Link>
         <Link to="/app/rewards" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3 active:opacity-70">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-pink/20">
