@@ -9,7 +9,7 @@ import { StatusBar, PageHeader } from "@/components/phone-shell";
 import { formatPts } from "@/lib/format";
 
 export const Route = createFileRoute("/app/transfer")({
-  head: () => ({ meta: [{ title: "Prześlij banany 🍌 — KAPP" }] }),
+  head: () => ({ meta: [{ title: "Wyślij banany — KAPP" }] }),
   component: TransferPage,
 });
 
@@ -169,7 +169,7 @@ function TransferPage() {
       toast.error(error.message || "Transfer nie powiódł się");
       return;
     }
-    toast.success(`Poszło ${parsed.data.amount} 🍌 do ${picked.first_name ?? picked.email}!`);
+    toast.success(`Wysłano ${parsed.data.amount} 🍌 do ${picked.first_name ?? picked.email}`);
     await refreshProfile();
     navigate({ to: "/app" });
   };
@@ -179,7 +179,7 @@ function TransferPage() {
     return (
       <div className="animate-fade-in">
         <StatusBar />
-        <PageHeader title="Wybierz odbiorcę" subtitle="Prześlij 🍌 ziomkowi" />
+        <PageHeader title="Wybierz odbiorcę" subtitle="Wyślij banany innemu studentowi" />
 
         <div className="bg-surface-2 mx-4 flex items-center gap-2 rounded-xl border border-input px-3 py-2.5">
           <Search className="h-4 w-4 text-text-2" />
@@ -247,7 +247,7 @@ function TransferPage() {
   return (
     <div className="animate-fade-in">
       <StatusBar />
-      <PageHeader title="Prześlij banany 🍌" subtitle="Transfer peer-to-peer" />
+      <PageHeader title="Wyślij banany" subtitle="Transfer między studentami" />
 
       <button
         onClick={() => setPicked(null)}
@@ -304,7 +304,7 @@ function TransferPage() {
         disabled={sending || n <= 0 || insufficient}
         className="bg-gradient-brand shadow-glow font-display mx-4 mt-4 w-[calc(100%-2rem)] rounded-2xl py-4 text-base font-bold text-white active:scale-[0.98] disabled:opacity-40"
       >
-        {sending ? "Lecimy…" : insufficient ? "Brakuje 🍌" : `Prześlij ${formatPts(n)} 🍌`}
+        {sending ? "Wysyłam…" : insufficient ? "Brakuje bananów" : `Wyślij ${formatPts(n)} 🍌`}
       </button>
       <div className="h-6" />
     </div>

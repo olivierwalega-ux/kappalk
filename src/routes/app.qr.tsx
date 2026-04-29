@@ -62,7 +62,7 @@ function QrPage() {
   return (
     <div className="animate-fade-in">
       <StatusBar />
-      <PageHeader title="Skaner QR" subtitle="Zeskanuj kod i zgarnij banany 🍌" />
+      <PageHeader title="Skaner QR" subtitle="Zeskanuj kod, żeby zdobyć banany" />
 
       <div className="flex flex-col items-center px-6 pt-2">
         <div className="bg-surface-2 relative h-64 w-64 overflow-hidden rounded-3xl border-2 border-primary/30">
@@ -149,7 +149,7 @@ function QrPage() {
         to="/app/transfer"
         className="bg-surface-2 font-display mx-4 mt-3 flex w-[calc(100%-2rem)] items-center justify-center gap-2 rounded-2xl border border-soft py-3.5 text-sm font-bold active:scale-[0.98]"
       >
-        <Send className="h-4 w-4 text-teal" /> Prześlij banany 🍌 ziomkowi
+        <Send className="h-4 w-4 text-teal" /> Wyślij banany innemu studentowi
       </Link>
 
       <SectionHeader title="Apple Wallet" />
