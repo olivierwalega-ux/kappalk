@@ -1,12 +1,12 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Home, Search, QrCode, GraduationCap, User } from "lucide-react";
+import { Home, Search, Gift, GraduationCap, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type NavItem = { to: string; label: string; icon: typeof Home; exact?: boolean };
 const items: NavItem[] = [
   { to: "/app", label: "Home", icon: Home, exact: true },
   { to: "/app/discover", label: "Odkryj", icon: Search },
-  { to: "/app/qr", label: "QR", icon: QrCode },
+  { to: "/app/rewards", label: "Nagrody", icon: Gift },
   { to: "/app/university", label: "Uczelnia", icon: GraduationCap },
   { to: "/app/profile", label: "Profil", icon: User },
 ];

@@ -1,56 +1,77 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { AlertCircle } from "lucide-react";
-import { StatusBar, PageHeader, Chips, SectionHeader } from "@/components/phone-shell";
+import { Utensils, ClipboardCheck, GraduationCap, CalendarDays, AlertCircle, ArrowLeft } from "lucide-react";
+import { StatusBar, PageHeader, SectionHeader } from "@/components/phone-shell";
 
 export const Route = createFileRoute("/app/university")({
   head: () => ({ meta: [{ title: "Uczelnia — KAPP" }] }),
   component: UniPage,
 });
 
-type Tab = "plan" | "menu" | "att" | "gpa" | "cal";
+type View = "home" | "menu" | "att" | "gpa" | "cal";
 
 function UniPage() {
-  const [tab, setTab] = useState<Tab>("plan");
+  const [view, setView] = useState<View>("home");
+
+  if (view !== "home") {
+    return (
+      <div className="animate-fade-in">
+        <StatusBar />
+        <button
+          onClick={() => setView("home")}
+          className="mx-4 mt-2 flex items-center gap-1.5 text-[13px] font-medium text-text-2 active:opacity-70"
+        >
+          <ArrowLeft className="h-4 w-4" /> Wróć
+        </button>
+        {view === "menu" && <MenuTab />}
+        {view === "att" && <AttTab />}
+        {view === "gpa" && <GpaTab />}
+        {view === "cal" && <CalTab />}
+        <div className="h-6" />
+      </div>
+    );
+  }
+
   return (
     <div className="animate-fade-in">
       <StatusBar />
-      <PageHeader title="Uczelnia" />
-      <Chips
-        value={tab}
-        onChange={setTab}
-        options={[
-          { id: "plan", label: "Plan zajęć" },
-          { id: "menu", label: "Stołówka" },
-          { id: "att", label: "Frekwencja" },
-          { id: "gpa", label: "GPA" },
-          { id: "cal", label: "Kalendarz" },
-        ]}
-      />
-      {tab === "plan" && <PlanTab />}
-      {tab === "menu" && <MenuTab />}
-      {tab === "att" && <AttTab />}
-      {tab === "gpa" && <GpaTab />}
-      {tab === "cal" && <CalTab />}
+      <PageHeader title="Uczelnia" subtitle="Twój dzień na ALK" />
+      <PlanTab />
+
+      <SectionHeader title="Więcej" />
+      <div className="mx-4 grid grid-cols-2 gap-2">
+        <Tile icon={Utensils} color="var(--gold)" bg="rgba(245,200,66,.12)" label="Stołówka" onClick={() => setView("menu")} />
+        <Tile icon={ClipboardCheck} color="var(--teal)" bg="rgba(62,198,198,.12)" label="Frekwencja" onClick={() => setView("att")} />
+        <Tile icon={GraduationCap} color="var(--brand-glow)" bg="rgba(123,110,246,.15)" label="GPA" onClick={() => setView("gpa")} />
+        <Tile icon={CalendarDays} color="var(--pink)" bg="rgba(232,96,122,.12)" label="Kalendarz" onClick={() => setView("cal")} />
+      </div>
       <div className="h-6" />
     </div>
   );
 }
 
+function Tile({ icon: Icon, color, bg, label, onClick }: { icon: typeof Utensils; color: string; bg: string; label: string; onClick: () => void }) {
+  return (
+    <button onClick={onClick} className="bg-surface-2 flex items-center gap-3 rounded-2xl border border-soft p-3.5 active:opacity-80">
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ background: bg }}>
+        <Icon className="h-5 w-5" style={{ color }} />
+      </div>
+      <span className="text-sm font-semibold text-text-1">{label}</span>
+    </button>
+  );
+}
+
 function PlanTab() {
-  const today = [{ time: "8:00", name: "Brak zajęć", loc: "Niedziela", color: "var(--brand)" }];
-  const tomorrow = [
-    { time: "8:00", name: "Zarządzanie Strategiczne", loc: "Sala 304 · dr Kowalski", color: "var(--brand)", badge: "Jutro" },
+  const today = [
+    { time: "8:00", name: "Zarządzanie Strategiczne", loc: "Sala 304 · dr Kowalski", color: "var(--brand)" },
     { time: "10:00", name: "Analiza Finansowa", loc: "Sala 201 · dr Wiśniewska", color: "var(--teal)" },
     { time: "12:00", name: "Marketing Cyfrowy", loc: "Lab. 105 · mgr Nowak", color: "var(--gold)" },
     { time: "14:00", name: "Prawo Gospodarcze", loc: "Aula B · dr Mazur", color: "var(--pink)" },
   ];
   return (
     <div>
-      <SectionHeader title="Dziś — Niedziela 20 kwi" />
+      <SectionHeader title="Plan na dziś" />
       <LessonList items={today} />
-      <SectionHeader title="Poniedziałek 21 kwi" />
-      <LessonList items={tomorrow} />
     </div>
   );
 }
@@ -85,6 +106,7 @@ function MenuTab() {
   ];
   return (
     <div>
+      <PageHeader title="Stołówka" />
       <SectionHeader title="Menu dziś — Hog's Head" action="−20% z KAPP" />
       <div className="mx-4">
         <div className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-wider text-text-3">Zupy</div>
@@ -122,7 +144,8 @@ function AttTab() {
   ];
   return (
     <div>
-      <SectionHeader title="Frekwencja — semestr letni" />
+      <PageHeader title="Frekwencja" />
+      <SectionHeader title="Semestr letni" />
       <div className="bg-surface-2 mx-4 overflow-hidden rounded-2xl border border-soft">
         {items.map((c) => {
           const ok = c.pct >= 70;
@@ -160,7 +183,8 @@ function GpaTab() {
   ];
   return (
     <div>
-      <div className="mt-4 text-center">
+      <PageHeader title="GPA" />
+      <div className="mt-2 text-center">
         <div className="font-display text-[52px] font-extrabold leading-none tracking-tight text-text-1">4.2</div>
         <div className="mt-1 text-xs text-text-2">Średnia ważona — semestr letni 2024/25</div>
       </div>
@@ -182,6 +206,7 @@ function CalTab() {
   const events = new Set([20, 21, 22, 26, 28]);
   return (
     <div>
+      <PageHeader title="Kalendarz" />
       <SectionHeader title="Kwiecień 2025" />
       <div className="bg-surface-2 mx-4 rounded-2xl border border-soft p-3">
         <div className="grid grid-cols-7 gap-1 pb-2">
@@ -190,7 +215,6 @@ function CalTab() {
           ))}
         </div>
         <div className="grid grid-cols-7 gap-1">
-          {/* April 1 2025 = Tuesday => start with one empty Mon */}
           <div />
           {days.map((d) => {
             const isToday = d === today;
@@ -208,25 +232,6 @@ function CalTab() {
             );
           })}
         </div>
-      </div>
-
-      <SectionHeader title="Nadchodzące" />
-      <div className="bg-surface-2 mx-4 overflow-hidden rounded-2xl border border-soft">
-        {[
-          { name: "Zarządzanie Strategiczne", meta: "Pn 21 kwi · 8:00 · Sala 304", tag: "Zajęcia", color: "var(--brand-glow)" },
-          { name: "Konferencja IT 2025", meta: "Nd 20 kwi · Aula A · +100 🍌", tag: "Event", color: "var(--pink)" },
-          { name: "Spotkanie Koła IT", meta: "Wt 22 kwi · 16:00 · Sala 105", tag: "Koło", color: "var(--teal)" },
-          { name: "Targi Pracy ALK", meta: "Pt 28 kwi · 10:00", tag: "Event", color: "var(--gold)" },
-        ].map((u) => (
-          <div key={u.name} className="flex items-center gap-3 border-b border-soft px-4 py-3 last:border-b-0">
-            <div className="h-2 w-2 rounded-full" style={{ background: u.color }} />
-            <div className="flex-1">
-              <div className="text-sm font-medium text-text-1">{u.name}</div>
-              <div className="text-[11px] text-text-2">{u.meta}</div>
-            </div>
-            <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold" style={{ background: `color-mix(in oklab, ${u.color} 15%, transparent)`, color: u.color }}>{u.tag}</span>
-          </div>
-        ))}
       </div>
     </div>
   );

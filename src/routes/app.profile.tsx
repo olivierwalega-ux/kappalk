@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { LogOut, Settings, ShieldCheck, Send, QrCode, Copy, Bell, CreditCard, Lock, Star, Clock, Users, Activity, Zap } from "lucide-react";
+import { LogOut, Settings, ShieldCheck, Send, QrCode, Copy, Bell, CreditCard, Lock, Star, Clock, Users, Activity, Zap, Trophy, Megaphone } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/lib/auth-context";
 import { StatusBar, SectionHeader } from "@/components/phone-shell";
@@ -79,6 +79,29 @@ function ProfilePage() {
         <Link to="/app/qr" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3.5 active:opacity-80">
           <QrCode className="h-5 w-5 text-teal" />
           <span className="text-[11px] font-medium text-text-2">Mój kod QR</span>
+        </Link>
+      </div>
+
+      {/* Społeczność */}
+      <SectionHeader title="Społeczność" />
+      <div className="mx-4 grid grid-cols-3 gap-2">
+        <Link to="/app/challenges" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3.5 active:opacity-80">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/15">
+            <Trophy className="h-5 w-5 text-gold" />
+          </div>
+          <span className="text-[11px] font-medium text-text-2">Wyzwania</span>
+        </Link>
+        <Link to="/app/groups" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3.5 active:opacity-80">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal/15">
+            <Users className="h-5 w-5 text-teal" />
+          </div>
+          <span className="text-[11px] font-medium text-text-2">Grupy</span>
+        </Link>
+        <Link to="/app/board" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3.5 active:opacity-80">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-pink/15">
+            <Megaphone className="h-5 w-5 text-pink" />
+          </div>
+          <span className="text-[11px] font-medium text-text-2">Ogłoszenia</span>
         </Link>
       </div>
 
