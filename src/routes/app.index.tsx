@@ -194,21 +194,41 @@ function HomePage() {
 
       {/* ACTIVITY */}
       <SectionHeader title="Ostatnia aktywność" action={<Link to="/app/profile">Wszystkie</Link>} />
-      <div className="bg-surface-2 mx-4 overflow-hidden rounded-2xl border border-soft">
-        {tx.length === 0 && <div className="p-4 text-sm text-text-2">Pusto. Zgarnij pierwsze banany 🍌 z eventu!</div>}
-        {tx.map((t) => (
-          <div key={t.id} className="flex items-center gap-3 border-b border-soft px-4 py-3 last:border-b-0">
-            <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-medium">{t.description ?? t.type}</div>
-              <div className="text-[11px] text-text-2">{new Date(t.created_at).toLocaleString("pl-PL")}</div>
-            </div>
-            <div className={`font-display text-sm font-bold ${t.amount >= 0 ? "text-green" : "text-pink"}`}>
-              {t.amount >= 0 ? "+" : ""}
-              {t.amount}
-            </div>
+      {tx.length === 0 ? (
+        <div className="mx-4 flex flex-col items-center gap-4 rounded-2xl border border-soft bg-surface-2 p-6 text-center">
+          <div className="bg-gradient-brand shadow-glow flex h-16 w-16 items-center justify-center rounded-2xl">
+            <QrCode className="h-7 w-7 text-white" />
           </div>
-        ))}
-      </div>
+          <div>
+            <div className="font-display text-[17px] font-extrabold text-text-1">Twoje banany czekają</div>
+            <p className="mx-auto mt-1.5 max-w-[260px] text-[13px] leading-relaxed text-text-3">
+              Zeskanuj pierwszy QR na kampusie i zdobądź swoje pierwsze banany 🍌
+            </p>
+          </div>
+          <Link
+            to="/app/qr"
+            className="bg-gradient-brand shadow-glow font-display mt-1 flex w-full items-center justify-center gap-2 rounded-2xl py-3.5 text-sm font-bold text-white active:scale-[0.98]"
+          >
+            <QrCode className="h-4 w-4" />
+            Otwórz skaner
+          </Link>
+        </div>
+      ) : (
+        <div className="bg-surface-2 mx-4 overflow-hidden rounded-2xl border border-soft">
+          {tx.map((t) => (
+            <div key={t.id} className="flex items-center gap-3 border-b border-soft px-4 py-3 last:border-b-0">
+              <div className="min-w-0 flex-1">
+                <div className="truncate text-sm font-medium">{t.description ?? t.type}</div>
+                <div className="text-[11px] text-text-2">{new Date(t.created_at).toLocaleString("pl-PL")}</div>
+              </div>
+              <div className={`font-display text-sm font-bold ${t.amount >= 0 ? "text-green" : "text-pink"}`}>
+                {t.amount >= 0 ? "+" : ""}
+                {t.amount}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
       <div className="h-6" />
     </div>
   );
