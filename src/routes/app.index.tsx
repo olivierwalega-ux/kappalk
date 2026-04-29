@@ -99,14 +99,17 @@ function HomePage() {
       </div>
 
 
+      {/* BIG SCAN BUTTON */}
+      <Link
+        to="/app/qr"
+        className="bg-gradient-brand shadow-glow font-display mx-4 mt-3 flex items-center justify-center gap-3 rounded-2xl py-4 text-[15px] font-extrabold text-white active:scale-[0.98]"
+      >
+        <QrCode className="h-5 w-5" />
+        Skanuj QR i zdobywaj banany 🍌
+      </Link>
+
       {/* QUICK ACTIONS */}
-      <div className="mx-4 mt-3 grid grid-cols-4 gap-2">
-        <Link to="/app/qr" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3 active:opacity-70">
-          <div className="bg-gradient-brand flex h-11 w-11 items-center justify-center rounded-2xl shadow-glow">
-            <QrCode className="h-5 w-5 text-white" />
-          </div>
-          <span className="text-[11px] font-medium">Skanuj QR</span>
-        </Link>
+      <div className="mx-4 mt-3 grid grid-cols-3 gap-2">
         <Link to="/app/transfer" className="bg-surface-2 flex flex-col items-center gap-2 rounded-2xl border border-soft p-3 active:opacity-70">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-teal/20">
             <Send className="h-5 w-5 text-teal" />
@@ -126,6 +129,9 @@ function HomePage() {
           <span className="text-[11px] font-medium">Ranking</span>
         </Link>
       </div>
+
+      {/* SERIA */}
+      <StreakRow streak={profile?.streak_days ?? 0} />
 
       {/* MISJE DNIA — 2x2 */}
       <SectionHeader title="Misje dnia" action={<Link to="/app/discover">Wszystkie</Link>} />
@@ -168,9 +174,6 @@ function HomePage() {
           );
         })}
       </div>
-
-      {/* SERIA */}
-      <StreakRow streak={profile?.streak_days ?? 0} />
 
 
       {/* TODAY EVENTS */}
