@@ -24,7 +24,10 @@ import { Route as AppRankingRouteImport } from './routes/app.ranking'
 import { Route as AppQrRouteImport } from './routes/app.qr'
 import { Route as AppProfileRouteImport } from './routes/app.profile'
 import { Route as AppNotificationsRouteImport } from './routes/app.notifications'
+import { Route as AppGroupsRouteImport } from './routes/app.groups'
 import { Route as AppDiscoverRouteImport } from './routes/app.discover'
+import { Route as AppChallengesRouteImport } from './routes/app.challenges'
+import { Route as AppBoardRouteImport } from './routes/app.board'
 import { Route as AdminStudentsRouteImport } from './routes/admin.students'
 import { Route as AdminEventsRouteImport } from './routes/admin.events'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
@@ -106,9 +109,24 @@ const AppNotificationsRoute = AppNotificationsRouteImport.update({
   path: '/notifications',
   getParentRoute: () => AppRoute,
 } as any)
+const AppGroupsRoute = AppGroupsRouteImport.update({
+  id: '/groups',
+  path: '/groups',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDiscoverRoute = AppDiscoverRouteImport.update({
   id: '/discover',
   path: '/discover',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppChallengesRoute = AppChallengesRouteImport.update({
+  id: '/challenges',
+  path: '/challenges',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBoardRoute = AppBoardRouteImport.update({
+  id: '/board',
+  path: '/board',
   getParentRoute: () => AppRoute,
 } as any)
 const AdminStudentsRoute = AdminStudentsRouteImport.update({
@@ -147,7 +165,10 @@ export interface FileRoutesByFullPath {
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/events': typeof AdminEventsRoute
   '/admin/students': typeof AdminStudentsRoute
+  '/app/board': typeof AppBoardRoute
+  '/app/challenges': typeof AppChallengesRoute
   '/app/discover': typeof AppDiscoverRoute
+  '/app/groups': typeof AppGroupsRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/profile': typeof AppProfileRoute
   '/app/qr': typeof AppQrRoute
@@ -168,7 +189,10 @@ export interface FileRoutesByTo {
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/events': typeof AdminEventsRoute
   '/admin/students': typeof AdminStudentsRoute
+  '/app/board': typeof AppBoardRoute
+  '/app/challenges': typeof AppChallengesRoute
   '/app/discover': typeof AppDiscoverRoute
+  '/app/groups': typeof AppGroupsRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/profile': typeof AppProfileRoute
   '/app/qr': typeof AppQrRoute
@@ -192,7 +216,10 @@ export interface FileRoutesById {
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/events': typeof AdminEventsRoute
   '/admin/students': typeof AdminStudentsRoute
+  '/app/board': typeof AppBoardRoute
+  '/app/challenges': typeof AppChallengesRoute
   '/app/discover': typeof AppDiscoverRoute
+  '/app/groups': typeof AppGroupsRoute
   '/app/notifications': typeof AppNotificationsRoute
   '/app/profile': typeof AppProfileRoute
   '/app/qr': typeof AppQrRoute
@@ -217,7 +244,10 @@ export interface FileRouteTypes {
     | '/admin/analytics'
     | '/admin/events'
     | '/admin/students'
+    | '/app/board'
+    | '/app/challenges'
     | '/app/discover'
+    | '/app/groups'
     | '/app/notifications'
     | '/app/profile'
     | '/app/qr'
@@ -238,7 +268,10 @@ export interface FileRouteTypes {
     | '/admin/analytics'
     | '/admin/events'
     | '/admin/students'
+    | '/app/board'
+    | '/app/challenges'
     | '/app/discover'
+    | '/app/groups'
     | '/app/notifications'
     | '/app/profile'
     | '/app/qr'
@@ -261,7 +294,10 @@ export interface FileRouteTypes {
     | '/admin/analytics'
     | '/admin/events'
     | '/admin/students'
+    | '/app/board'
+    | '/app/challenges'
     | '/app/discover'
+    | '/app/groups'
     | '/app/notifications'
     | '/app/profile'
     | '/app/qr'
@@ -393,11 +429,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppNotificationsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/groups': {
+      id: '/app/groups'
+      path: '/groups'
+      fullPath: '/app/groups'
+      preLoaderRoute: typeof AppGroupsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/discover': {
       id: '/app/discover'
       path: '/discover'
       fullPath: '/app/discover'
       preLoaderRoute: typeof AppDiscoverRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/challenges': {
+      id: '/app/challenges'
+      path: '/challenges'
+      fullPath: '/app/challenges'
+      preLoaderRoute: typeof AppChallengesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/board': {
+      id: '/app/board'
+      path: '/board'
+      fullPath: '/app/board'
+      preLoaderRoute: typeof AppBoardRouteImport
       parentRoute: typeof AppRoute
     }
     '/admin/students': {
@@ -455,7 +512,10 @@ const AdminRouteChildren: AdminRouteChildren = {
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface AppRouteChildren {
+  AppBoardRoute: typeof AppBoardRoute
+  AppChallengesRoute: typeof AppChallengesRoute
   AppDiscoverRoute: typeof AppDiscoverRoute
+  AppGroupsRoute: typeof AppGroupsRoute
   AppNotificationsRoute: typeof AppNotificationsRoute
   AppProfileRoute: typeof AppProfileRoute
   AppQrRoute: typeof AppQrRoute
@@ -467,7 +527,10 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppBoardRoute: AppBoardRoute,
+  AppChallengesRoute: AppChallengesRoute,
   AppDiscoverRoute: AppDiscoverRoute,
+  AppGroupsRoute: AppGroupsRoute,
   AppNotificationsRoute: AppNotificationsRoute,
   AppProfileRoute: AppProfileRoute,
   AppQrRoute: AppQrRoute,
